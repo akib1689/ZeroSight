@@ -158,8 +158,8 @@ ENV/
 env.bak/
 venv.bak/
 
-# Project data (downloaded separately)
-data/
+# Project data (downloaded separately; may be a symlink to a shared checkout)
+data
 
 # Run artifacts (raw results stay local; freeze/derive as needed)
 results/
