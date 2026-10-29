@@ -1,0 +1,1636 @@
+{
+  "version": 1,
+  "created": "2026-09-11",
+  "seed": 20260911,
+  "source_file": "data/spider/dev.json",
+  "n_questions": 200,
+  "formula": "largest-remainder apportionment of a 200-question budget across official Spider eval_hardness strata (proportional to source counts); strata sampled rare-first",
+  "gates": [
+    "db sqlite file present",
+    "non-empty question and gold SQL",
+    "parsed sql field present",
+    "unique normalized question text",
+    "max ceil(0.1934 * db count) + 3 questions per database",
+    "short questions preferred"
+  ],
+  "quotas": {
+    "medium": 86,
+    "easy": 48,
+    "hard": 34,
+    "extra": 32
+  },
+  "ids": [
+    575,
+    906,
+    344,
+    540,
+    157,
+    697,
+    794,
+    166,
+    547,
+    774,
+    981,
+    562,
+    561,
+    795,
+    66,
+    42,
+    761,
+    754,
+    929,
+    935,
+    712,
+    818,
+    573,
+    61,
+    151,
+    845,
+    452,
+    131,
+    698,
+    343,
+    225,
+    923,
+    535,
+    811,
+    752,
+    762,
+    332,
+    116,
+    282,
+    95,
+    281,
+    924,
+    914,
+    141,
+    894,
+    772,
+    106,
+    29,
+    396,
+    854,
+    918,
+    911,
+    115,
+    331,
+    257,
+    44,
+    279,
+    1028,
+    345,
+    463,
+    256,
+    921,
+    814,
+    465,
+    855,
+    571,
+    143,
+    377,
+    681,
+    384,
+    706,
+    144,
+    836,
+    992,
+    203,
+    502,
+    179,
+    642,
+    357,
+    182,
+    298,
+    988,
+    322,
+    126,
+    866,
+    445,
+    519,
+    92,
+    350,
+    262,
+    187,
+    619,
+    602,
+    867,
+    678,
+    444,
+    733,
+    333,
+    601,
+    145,
+    835,
+    967,
+    510,
+    829,
+    822,
+    1002,
+    589,
+    371,
+    653,
+    247,
+    117,
+    560,
+    180,
+    202,
+    254,
+    716,
+    913,
+    360,
+    821,
+    246,
+    771,
+    905,
+    526,
+    554,
+    183,
+    508,
+    972,
+    942,
+    492,
+    842,
+    739,
+    1012,
+    457,
+    139,
+    78,
+    628,
+    947,
+    1025,
+    1019,
+    725,
+    339,
+    847,
+    723,
+    269,
+    210,
+    341,
+    840,
+    335,
+    738,
+    67,
+    419,
+    184,
+    310,
+    625,
+    816,
+    434,
+    893,
+    904,
+    1010,
+    389,
+    833,
+    287,
+    688,
+    74,
+    34,
+    16,
+    468,
+    394,
+    790,
+    672,
+    612,
+    531,
+    639,
+    789,
+    90,
+    467,
+    736,
+    953,
+    336,
+    629,
+    481,
+    701,
+    309,
+    241,
+    669,
+    673,
+    616,
+    711,
+    218,
+    551,
+    138,
+    288,
+    523,
+    624,
+    120,
+    155,
+    391,
+    696,
+    323,
+    958
+  ],
+  "ids_by_difficulty": {
+    "medium": [
+      254,
+      716,
+      913,
+      360,
+      821,
+      246,
+      771,
+      905,
+      526,
+      554,
+      183,
+      508,
+      972,
+      942,
+      492,
+      842,
+      739,
+      1012,
+      457,
+      139,
+      78,
+      628,
+      947,
+      1025,
+      1019,
+      725,
+      339,
+      847,
+      723,
+      269,
+      210,
+      341,
+      840,
+      335,
+      738,
+      67,
+      419,
+      184,
+      310,
+      625,
+      816,
+      434,
+      893,
+      904,
+      1010,
+      389,
+      833,
+      287,
+      688,
+      74,
+      34,
+      16,
+      468,
+      394,
+      790,
+      672,
+      612,
+      531,
+      639,
+      789,
+      90,
+      467,
+      736,
+      953,
+      336,
+      629,
+      481,
+      701,
+      309,
+      241,
+      669,
+      673,
+      616,
+      711,
+      218,
+      551,
+      138,
+      288,
+      523,
+      624,
+      120,
+      155,
+      391,
+      696,
+      323,
+      958
+    ],
+    "easy": [
+      143,
+      377,
+      681,
+      384,
+      706,
+      144,
+      836,
+      992,
+      203,
+      502,
+      179,
+      642,
+      357,
+      182,
+      298,
+      988,
+      322,
+      126,
+      866,
+      445,
+      519,
+      92,
+      350,
+      262,
+      187,
+      619,
+      602,
+      867,
+      678,
+      444,
+      733,
+      333,
+      601,
+      145,
+      835,
+      967,
+      510,
+      829,
+      822,
+      1002,
+      589,
+      371,
+      653,
+      247,
+      117,
+      560,
+      180,
+      202
+    ],
+    "hard": [
+      535,
+      811,
+      752,
+      762,
+      332,
+      116,
+      282,
+      95,
+      281,
+      924,
+      914,
+      141,
+      894,
+      772,
+      106,
+      29,
+      396,
+      854,
+      918,
+      911,
+      115,
+      331,
+      257,
+      44,
+      279,
+      1028,
+      345,
+      463,
+      256,
+      921,
+      814,
+      465,
+      855,
+      571
+    ],
+    "extra": [
+      575,
+      906,
+      344,
+      540,
+      157,
+      697,
+      794,
+      166,
+      547,
+      774,
+      981,
+      562,
+      561,
+      795,
+      66,
+      42,
+      761,
+      754,
+      929,
+      935,
+      712,
+      818,
+      573,
+      61,
+      151,
+      845,
+      452,
+      131,
+      698,
+      343,
+      225,
+      923
+    ]
+  },
+  "items": [
+    {
+      "index": 575,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "Find the semester when both Master students and Bachelor students got enrolled in."
+    },
+    {
+      "index": 906,
+      "db_id": "network_1",
+      "difficulty": "extra",
+      "question": "What is the name of the high schooler who has the greatest number of likes?"
+    },
+    {
+      "index": 344,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "extra",
+      "question": "Return the code of the template type that is most commonly used in documents."
+    },
+    {
+      "index": 540,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "What is the program id and the summary of the degree that has the most students enrolled?"
+    },
+    {
+      "index": 157,
+      "db_id": "car_1",
+      "difficulty": "extra",
+      "question": "For model volvo, how many cylinders does the car with the least accelerate have?"
+    },
+    {
+      "index": 697,
+      "db_id": "voter_1",
+      "difficulty": "extra",
+      "question": "How many contestants did not get voted?"
+    },
+    {
+      "index": 794,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "Find the number of cities in each district whose population is greater than the average population of cities?"
+    },
+    {
+      "index": 166,
+      "db_id": "car_1",
+      "difficulty": "extra",
+      "question": "For all of the 4 cylinder cars, which model has the most horsepower?"
+    },
+    {
+      "index": 547,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "What's the name of the course with most number of enrollments?"
+    },
+    {
+      "index": 774,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "What are the African countries that have a  population less than any country in Asia?"
+    },
+    {
+      "index": 981,
+      "db_id": "dog_kennels",
+      "difficulty": "extra",
+      "question": "Find the number of owners who do not own any dogs at this moment."
+    },
+    {
+      "index": 562,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "What is the id, line 1, and line 2 of the address with the most students?"
+    },
+    {
+      "index": 561,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "Which address holds the most number of students currently? List the address id and all lines."
+    },
+    {
+      "index": 795,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "How many cities in each district have a population that is above the average population across all cities?"
+    },
+    {
+      "index": 66,
+      "db_id": "pets_1",
+      "difficulty": "extra",
+      "question": "What is the first name of every student who has a dog but does not have a cat?"
+    },
+    {
+      "index": 42,
+      "db_id": "concert_singer",
+      "difficulty": "extra",
+      "question": "What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?"
+    },
+    {
+      "index": 761,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "What is the most populace city that speaks English?"
+    },
+    {
+      "index": 754,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "What are the countries where either English or Dutch is the official language ?"
+    },
+    {
+      "index": 929,
+      "db_id": "dog_kennels",
+      "difficulty": "extra",
+      "question": "Give me the id, role and email of the professionals who did not perform any treatment on dogs."
+    },
+    {
+      "index": 935,
+      "db_id": "dog_kennels",
+      "difficulty": "extra",
+      "question": "Which breed do the most dogs have? Give me the breed name."
+    },
+    {
+      "index": 712,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "Which language is the most popular in Aruba?"
+    },
+    {
+      "index": 818,
+      "db_id": "world_1",
+      "difficulty": "extra",
+      "question": "What is the total number of countries where Spanish is spoken by the largest percentage of people?"
+    },
+    {
+      "index": 573,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "extra",
+      "question": "Show the date of the transcript which shows the least number of results, also list the id."
+    },
+    {
+      "index": 61,
+      "db_id": "pets_1",
+      "difficulty": "extra",
+      "question": "Find the major and age of students who do not have a cat pet."
+    },
+    {
+      "index": 151,
+      "db_id": "car_1",
+      "difficulty": "extra",
+      "question": "Which distinctive models are produced by maker with the full name General Motors or weighing more than 3500?"
+    },
+    {
+      "index": 845,
+      "db_id": "orchestra",
+      "difficulty": "extra",
+      "question": "What is the name of the conductor who has conducted the most orchestras?"
+    },
+    {
+      "index": 452,
+      "db_id": "wta_1",
+      "difficulty": "extra",
+      "question": "What are the first names and country codes for players who won both the WTA Championships and the Australian Open?"
+    },
+    {
+      "index": 131,
+      "db_id": "car_1",
+      "difficulty": "extra",
+      "question": "What is the maximum horsepower and the make of the car models with 3 cylinders?"
+    },
+    {
+      "index": 698,
+      "db_id": "voter_1",
+      "difficulty": "extra",
+      "question": "What is the area code in which the most voters voted?"
+    },
+    {
+      "index": 343,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "extra",
+      "question": "Which template type code is used by most number of documents?"
+    },
+    {
+      "index": 225,
+      "db_id": "flight_2",
+      "difficulty": "extra",
+      "question": "What is the code of airport that has the highest number of flights?"
+    },
+    {
+      "index": 923,
+      "db_id": "dog_kennels",
+      "difficulty": "extra",
+      "question": "Find the id, last name and cell phone of the professionals who live in the state of Indiana or have performed more than two treatments."
+    },
+    {
+      "index": 535,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "hard",
+      "question": "Who is enrolled in a Bachelor degree program? List the first name, middle name, last name."
+    },
+    {
+      "index": 811,
+      "db_id": "world_1",
+      "difficulty": "hard",
+      "question": "Give the total population and average surface area corresponding to countries in North America that have a surface area greater than 3000 ."
+    },
+    {
+      "index": 752,
+      "db_id": "world_1",
+      "difficulty": "hard",
+      "question": "What are the regions that use English or Dutch?"
+    },
+    {
+      "index": 762,
+      "db_id": "world_1",
+      "difficulty": "hard",
+      "question": "Find the name, population and expected life length of asian country with the largest area?"
+    },
+    {
+      "index": 332,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "hard",
+      "question": "Return the type code of the template type that the most templates belong to."
+    },
+    {
+      "index": 116,
+      "db_id": "car_1",
+      "difficulty": "hard",
+      "question": "What is the count of the car models produced in the United States?"
+    },
+    {
+      "index": 282,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "hard",
+      "question": "What are the names of the employees who never received any evaluation?"
+    },
+    {
+      "index": 95,
+      "db_id": "car_1",
+      "difficulty": "hard",
+      "question": "Which model of the car has the minimum horsepower?"
+    },
+    {
+      "index": 281,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "hard",
+      "question": "Find the names of employees who never won any award in the evaluation."
+    },
+    {
+      "index": 924,
+      "db_id": "dog_kennels",
+      "difficulty": "hard",
+      "question": "Which dogs have not cost their owner more than 1000 for treatment ? List the dog names ."
+    },
+    {
+      "index": 914,
+      "db_id": "network_1",
+      "difficulty": "hard",
+      "question": "Find the average grade of all students who have some friends."
+    },
+    {
+      "index": 141,
+      "db_id": "car_1",
+      "difficulty": "hard",
+      "question": "Which model has the most version(make) of cars?"
+    },
+    {
+      "index": 894,
+      "db_id": "network_1",
+      "difficulty": "hard",
+      "question": "Show ids of all students who do not have any friends."
+    },
+    {
+      "index": 772,
+      "db_id": "world_1",
+      "difficulty": "hard",
+      "question": "What are the countries that have greater surface area than any country in Europe?"
+    },
+    {
+      "index": 106,
+      "db_id": "car_1",
+      "difficulty": "hard",
+      "question": "What is the name of each continent and how many car makers are there in each one?"
+    },
+    {
+      "index": 29,
+      "db_id": "concert_singer",
+      "difficulty": "hard",
+      "question": "What are the names of the stadiums without any concerts?"
+    },
+    {
+      "index": 396,
+      "db_id": "course_teach",
+      "difficulty": "hard",
+      "question": "What is the most commmon hometowns for teachers?"
+    },
+    {
+      "index": 854,
+      "db_id": "orchestra",
+      "difficulty": "hard",
+      "question": "List the names of orchestras that have no performance."
+    },
+    {
+      "index": 918,
+      "db_id": "dog_kennels",
+      "difficulty": "hard",
+      "question": "Which states have both owners and professionals living there?"
+    },
+    {
+      "index": 911,
+      "db_id": "network_1",
+      "difficulty": "hard",
+      "question": "What are the names of high schoolers who have a grade of over 5 and have 2 or more friends?"
+    },
+    {
+      "index": 115,
+      "db_id": "car_1",
+      "difficulty": "hard",
+      "question": "How many car models are produced in the usa?"
+    },
+    {
+      "index": 331,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "hard",
+      "question": "Which template type code has most number of templates?"
+    },
+    {
+      "index": 257,
+      "db_id": "flight_2",
+      "difficulty": "hard",
+      "question": "Find the name of airports which do not have any flight in and out."
+    },
+    {
+      "index": 44,
+      "db_id": "concert_singer",
+      "difficulty": "hard",
+      "question": "What are the number of concerts that occurred in the stadium with the largest capacity ?"
+    },
+    {
+      "index": 279,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "hard",
+      "question": "Find the name of the employee who got the highest one time bonus."
+    },
+    {
+      "index": 1028,
+      "db_id": "singer",
+      "difficulty": "hard",
+      "question": "Show the citizenship shared by singers with birth year before 1945 and after 1955."
+    },
+    {
+      "index": 345,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "hard",
+      "question": "Show all template type codes that are not used by any document."
+    },
+    {
+      "index": 463,
+      "db_id": "wta_1",
+      "difficulty": "hard",
+      "question": "Find the name and rank points of the winner who won the most times."
+    },
+    {
+      "index": 256,
+      "db_id": "flight_2",
+      "difficulty": "hard",
+      "question": "How many flights land in Aberdeen or Abilene?"
+    },
+    {
+      "index": 921,
+      "db_id": "dog_kennels",
+      "difficulty": "hard",
+      "question": "Find the average age of the dogs who went through treatments."
+    },
+    {
+      "index": 814,
+      "db_id": "world_1",
+      "difficulty": "hard",
+      "question": "Which language is spoken by the largest number of countries?"
+    },
+    {
+      "index": 465,
+      "db_id": "wta_1",
+      "difficulty": "hard",
+      "question": "Find the name of the winner who has the highest rank points and participated in the Australian Open tourney."
+    },
+    {
+      "index": 855,
+      "db_id": "orchestra",
+      "difficulty": "hard",
+      "question": "What are the orchestras that do not have any performances?"
+    },
+    {
+      "index": 571,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "hard",
+      "question": "How many times at most can a course enrollment result show in different transcripts? Also show the course enrollment id."
+    },
+    {
+      "index": 143,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "How many cars have more than 4 cylinders?"
+    },
+    {
+      "index": 377,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "What is the document id with 1 to 2 paragraphs?"
+    },
+    {
+      "index": 681,
+      "db_id": "poker_player",
+      "difficulty": "easy",
+      "question": "Show names of people whose nationality is not \"Russia\"."
+    },
+    {
+      "index": 384,
+      "db_id": "course_teach",
+      "difficulty": "easy",
+      "question": "What are the names of the teachers ordered by ascending age?"
+    },
+    {
+      "index": 706,
+      "db_id": "world_1",
+      "difficulty": "easy",
+      "question": "What is the total surface area of the countries in the Caribbean region?"
+    },
+    {
+      "index": 144,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "What is the number of cars with more than 4 cylinders?"
+    },
+    {
+      "index": 836,
+      "db_id": "orchestra",
+      "difficulty": "easy",
+      "question": "List names of conductors in descending order of years of work."
+    },
+    {
+      "index": 992,
+      "db_id": "dog_kennels",
+      "difficulty": "easy",
+      "question": "How much does the most expensive charge type costs?"
+    },
+    {
+      "index": 203,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "How many flights depart from 'APG'?"
+    },
+    {
+      "index": 502,
+      "db_id": "battle_death",
+      "difficulty": "easy",
+      "question": "How many different results are there for the battles?"
+    },
+    {
+      "index": 179,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "Which country does Airline \"JetBlue Airways\" belong to?"
+    },
+    {
+      "index": 642,
+      "db_id": "tvshow",
+      "difficulty": "easy",
+      "question": "What are the ids of all tv channels that have more than 2 TV channels?"
+    },
+    {
+      "index": 357,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "How many paragraphs in total?"
+    },
+    {
+      "index": 182,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "Which abbreviation corresponds to Jetblue Airways?"
+    },
+    {
+      "index": 298,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "Count the number of documents."
+    },
+    {
+      "index": 988,
+      "db_id": "dog_kennels",
+      "difficulty": "easy",
+      "question": "What is the age of the oldest dog?"
+    },
+    {
+      "index": 322,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "What are the different template type codes?"
+    },
+    {
+      "index": 126,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "What is the number of cars with a horsepower greater than 150?"
+    },
+    {
+      "index": 866,
+      "db_id": "network_1",
+      "difficulty": "easy",
+      "question": "Show all the grades of the high schoolers."
+    },
+    {
+      "index": 445,
+      "db_id": "wta_1",
+      "difficulty": "easy",
+      "question": "Find the name of tourney that has more than 10 matches."
+    },
+    {
+      "index": 519,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "easy",
+      "question": "How many different degree names are offered?"
+    },
+    {
+      "index": 92,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "How many countries exist?"
+    },
+    {
+      "index": 350,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "Return the template type description of the template type with the code AD."
+    },
+    {
+      "index": 262,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "easy",
+      "question": "List the names of employees and sort in ascending order of age."
+    },
+    {
+      "index": 187,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "How many airlines do we have?"
+    },
+    {
+      "index": 619,
+      "db_id": "tvshow",
+      "difficulty": "easy",
+      "question": "What is the air date of TV series with Episode \"A Love of a Lifetime\"?"
+    },
+    {
+      "index": 602,
+      "db_id": "tvshow",
+      "difficulty": "easy",
+      "question": "What are the Package Options of the TV Channels whose series names are Sky Radio?"
+    },
+    {
+      "index": 867,
+      "db_id": "network_1",
+      "difficulty": "easy",
+      "question": "What is the grade of each high schooler?"
+    },
+    {
+      "index": 678,
+      "db_id": "poker_player",
+      "difficulty": "easy",
+      "question": "Return the nationalities for which there are two or more people."
+    },
+    {
+      "index": 444,
+      "db_id": "wta_1",
+      "difficulty": "easy",
+      "question": "How many different loser names are there?"
+    },
+    {
+      "index": 733,
+      "db_id": "world_1",
+      "difficulty": "easy",
+      "question": "What is the number of distinct languages used around the world?"
+    },
+    {
+      "index": 333,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "Show all template type codes with less than three templates."
+    },
+    {
+      "index": 601,
+      "db_id": "tvshow",
+      "difficulty": "easy",
+      "question": "What is the Package Option of TV Channel with serial name \"Sky Radio\"?"
+    },
+    {
+      "index": 145,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "how many cars were produced in 1980?"
+    },
+    {
+      "index": 835,
+      "db_id": "orchestra",
+      "difficulty": "easy",
+      "question": "Count the number of different nationalities of conductors."
+    },
+    {
+      "index": 967,
+      "db_id": "dog_kennels",
+      "difficulty": "easy",
+      "question": "Count the number of dogs that went through a treatment."
+    },
+    {
+      "index": 510,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "easy",
+      "question": "How many courses are there?"
+    },
+    {
+      "index": 829,
+      "db_id": "orchestra",
+      "difficulty": "easy",
+      "question": "Return the record companies of orchestras, sorted descending by the years in which they were founded."
+    },
+    {
+      "index": 822,
+      "db_id": "orchestra",
+      "difficulty": "easy",
+      "question": "How many conductors are there?"
+    },
+    {
+      "index": 1002,
+      "db_id": "singer",
+      "difficulty": "easy",
+      "question": "List the name of singers in ascending order of net worth."
+    },
+    {
+      "index": 589,
+      "db_id": "tvshow",
+      "difficulty": "easy",
+      "question": "How many cartoons were written by \"Joseph Kuhr\"?"
+    },
+    {
+      "index": 371,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "easy",
+      "question": "List all document ids with at least two paragraphs."
+    },
+    {
+      "index": 653,
+      "db_id": "poker_player",
+      "difficulty": "easy",
+      "question": "What is the average earnings of poker players?"
+    },
+    {
+      "index": 247,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "What are flight numbers of flights departing from Airport \"APG\"?"
+    },
+    {
+      "index": 117,
+      "db_id": "car_1",
+      "difficulty": "easy",
+      "question": "What is the average miles per gallon(mpg) of the cars with 4 cylinders?"
+    },
+    {
+      "index": 560,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "easy",
+      "question": "What is the first name of the student whose permanent address is different from his or her current one?"
+    },
+    {
+      "index": 180,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "What country is Jetblue Airways affiliated with?"
+    },
+    {
+      "index": 202,
+      "db_id": "flight_2",
+      "difficulty": "easy",
+      "question": "What are the names of airports in Aberdeen?"
+    },
+    {
+      "index": 254,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "Give the flight numbers of flights arriving in Aberdeen."
+    },
+    {
+      "index": 716,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "What are the region and population of Angola?"
+    },
+    {
+      "index": 913,
+      "db_id": "network_1",
+      "difficulty": "medium",
+      "question": "Return the number of likes that the high schooler named Kyle has."
+    },
+    {
+      "index": 360,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "Count the number of paragraphs in the document named 'Summer Show'."
+    },
+    {
+      "index": 821,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "Return the codes of countries for which Spanish is the predominantly spoken language."
+    },
+    {
+      "index": 246,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "Which flight numbers correspond to United Airlines flights?"
+    },
+    {
+      "index": 771,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "For the countries founded before 1930, what is the total number of distinct official languages?"
+    },
+    {
+      "index": 905,
+      "db_id": "network_1",
+      "difficulty": "medium",
+      "question": "What are the names of high schoolers who have likes, and how many likes does each have?"
+    },
+    {
+      "index": 526,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "What are the names and ids of every course with less than 2 sections?"
+    },
+    {
+      "index": 554,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "What is the mobile phone number of the student named Timmothy Ward ?"
+    },
+    {
+      "index": 183,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "List all airline names and their abbreviations in \"USA\"."
+    },
+    {
+      "index": 508,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "What is the first and second line for all addresses?"
+    },
+    {
+      "index": 972,
+      "db_id": "dog_kennels",
+      "difficulty": "medium",
+      "question": "Which owners live in the state whose name contains the substring 'North'? List his first name, last name and email."
+    },
+    {
+      "index": 942,
+      "db_id": "dog_kennels",
+      "difficulty": "medium",
+      "question": "Which professionals have done at least two types of treatments? List the professional id and cell phone."
+    },
+    {
+      "index": 492,
+      "db_id": "battle_death",
+      "difficulty": "medium",
+      "question": "List the name and tonnage ordered by in descending alphaetical order for the names."
+    },
+    {
+      "index": 842,
+      "db_id": "orchestra",
+      "difficulty": "medium",
+      "question": "Show the names of conductors that have conducted more than one orchestras."
+    },
+    {
+      "index": 739,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "How many official languages are spoken in Afghanistan?"
+    },
+    {
+      "index": 1012,
+      "db_id": "singer",
+      "difficulty": "medium",
+      "question": "Show different citizenship of singers and the number of singers of each citizenship."
+    },
+    {
+      "index": 457,
+      "db_id": "wta_1",
+      "difficulty": "medium",
+      "question": "List the first and last name of all players who are left / L hand in the order of birth date."
+    },
+    {
+      "index": 139,
+      "db_id": "car_1",
+      "difficulty": "medium",
+      "question": "What is the maximum accelerate for different number of cylinders?"
+    },
+    {
+      "index": 78,
+      "db_id": "pets_1",
+      "difficulty": "medium",
+      "question": "What is the id of the pet owned by the student whose last name is 'Smith'?"
+    },
+    {
+      "index": 628,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "How many cartoons did each director create?"
+    },
+    {
+      "index": 947,
+      "db_id": "dog_kennels",
+      "difficulty": "medium",
+      "question": "What are the date and the operating professional's first name of each treatment?"
+    },
+    {
+      "index": 1025,
+      "db_id": "singer",
+      "difficulty": "medium",
+      "question": "For each singer name, what is the total sales for their songs?"
+    },
+    {
+      "index": 1019,
+      "db_id": "singer",
+      "difficulty": "medium",
+      "question": "What are the song titles and singer names?"
+    },
+    {
+      "index": 725,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "Give the average life expectancy for countries in Africa which are republics?"
+    },
+    {
+      "index": 339,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "Show all document names using templates with template type code BK."
+    },
+    {
+      "index": 847,
+      "db_id": "orchestra",
+      "difficulty": "medium",
+      "question": "What are the names of conductors who have conducted orchestras founded after the year 2008?"
+    },
+    {
+      "index": 723,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "How many people live in Asia, and what is the largest GNP among them?"
+    },
+    {
+      "index": 269,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "medium",
+      "question": "Find the manager name and district of the shop whose number of products is the largest."
+    },
+    {
+      "index": 210,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "Return the number of flights arriving in Aberdeen."
+    },
+    {
+      "index": 341,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "Show all template type codes and the number of documents using each type."
+    },
+    {
+      "index": 840,
+      "db_id": "orchestra",
+      "difficulty": "medium",
+      "question": "Show the names of conductors and the orchestras they have conducted."
+    },
+    {
+      "index": 335,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "What the smallest version number and its template type code?"
+    },
+    {
+      "index": 738,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "How many official languages does Afghanistan have?"
+    },
+    {
+      "index": 67,
+      "db_id": "pets_1",
+      "difficulty": "medium",
+      "question": "Find the type and weight of the youngest pet."
+    },
+    {
+      "index": 419,
+      "db_id": "museum_visit",
+      "difficulty": "medium",
+      "question": "find the id, name and age for visitors who visited some museums more than once."
+    },
+    {
+      "index": 184,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "What are the airline names and abbreviations for airlines in the USA?"
+    },
+    {
+      "index": 310,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "What are all different template ids used for documents, and how many times were each of them used?"
+    },
+    {
+      "index": 625,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "List the Episode of all  TV series showed on TV Channel with series name \"Sky Radio\"."
+    },
+    {
+      "index": 816,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "What is the language spoken by the largest percentage of people in each country?"
+    },
+    {
+      "index": 434,
+      "db_id": "wta_1",
+      "difficulty": "medium",
+      "question": "What are the first names and birth dates of players from the USA?"
+    },
+    {
+      "index": 893,
+      "db_id": "network_1",
+      "difficulty": "medium",
+      "question": "Count the number of friends Kyle has."
+    },
+    {
+      "index": 904,
+      "db_id": "network_1",
+      "difficulty": "medium",
+      "question": "Show the names of high schoolers who have likes, and numbers of likes for each."
+    },
+    {
+      "index": 1010,
+      "db_id": "singer",
+      "difficulty": "medium",
+      "question": "What is the name of the singer with the largest net worth?"
+    },
+    {
+      "index": 389,
+      "db_id": "course_teach",
+      "difficulty": "medium",
+      "question": "Show the name of teachers aged either 32 or 33?"
+    },
+    {
+      "index": 833,
+      "db_id": "orchestra",
+      "difficulty": "medium",
+      "question": "Return the maximum and minimum shares for performances that do not have the type \"Live final\"."
+    },
+    {
+      "index": 287,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "medium",
+      "question": "Find the number of employees hired in each shop; show the shop name as well."
+    },
+    {
+      "index": 688,
+      "db_id": "voter_1",
+      "difficulty": "medium",
+      "question": "List the contestant numbers and names, ordered by contestant name descending."
+    },
+    {
+      "index": 74,
+      "db_id": "pets_1",
+      "difficulty": "medium",
+      "question": "What is the average weight for each type of pet?"
+    },
+    {
+      "index": 34,
+      "db_id": "concert_singer",
+      "difficulty": "medium",
+      "question": "What are the names , themes , and number of singers for every concert ?"
+    },
+    {
+      "index": 16,
+      "db_id": "concert_singer",
+      "difficulty": "medium",
+      "question": "What is the maximum capacity and the average of all stadiums ?"
+    },
+    {
+      "index": 468,
+      "db_id": "wta_1",
+      "difficulty": "medium",
+      "question": "What are the names of the winner and loser who played in the longest match?"
+    },
+    {
+      "index": 394,
+      "db_id": "course_teach",
+      "difficulty": "medium",
+      "question": "For each hometown, how many teachers are there?"
+    },
+    {
+      "index": 790,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "What are the population, name and leader of the country with the largest area?"
+    },
+    {
+      "index": 672,
+      "db_id": "poker_player",
+      "difficulty": "medium",
+      "question": "Return the names of poker players sorted by their earnings descending."
+    },
+    {
+      "index": 612,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "What is the title of all the cartools that are on the TV Channel with the series name \"Sky Radio\"?"
+    },
+    {
+      "index": 531,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "What is the description of the department whose name has the substring the computer?"
+    },
+    {
+      "index": 639,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "find the pixel aspect ratio and nation of the tv channels that do not use English."
+    },
+    {
+      "index": 789,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "Give the name, year of independence, and surface area of the country that has the lowest population."
+    },
+    {
+      "index": 90,
+      "db_id": "car_1",
+      "difficulty": "medium",
+      "question": "For each continent, list its id, name, and how many countries it has?"
+    },
+    {
+      "index": 467,
+      "db_id": "wta_1",
+      "difficulty": "medium",
+      "question": "find the names of loser and winner who played in the match with greatest number of minutes."
+    },
+    {
+      "index": 736,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "What is the total number of languages used in Aruba?"
+    },
+    {
+      "index": 953,
+      "db_id": "dog_kennels",
+      "difficulty": "medium",
+      "question": "What are each owner's first name and their dogs's name?"
+    },
+    {
+      "index": 336,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "Return the lowest version number, along with its corresponding template type code."
+    },
+    {
+      "index": 629,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "Find the production code and channel of the most recently aired cartoon ."
+    },
+    {
+      "index": 481,
+      "db_id": "wta_1",
+      "difficulty": "medium",
+      "question": "Find the number of matches happened in each year."
+    },
+    {
+      "index": 701,
+      "db_id": "voter_1",
+      "difficulty": "medium",
+      "question": "Return the names of the contestants whose names contain the substring 'Al' ."
+    },
+    {
+      "index": 309,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "Show all template ids and number of documents using each template."
+    },
+    {
+      "index": 241,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "Find all airlines that have at least 10 flights."
+    },
+    {
+      "index": 669,
+      "db_id": "poker_player",
+      "difficulty": "medium",
+      "question": "What is the average earnings of poker players with height higher than 200?"
+    },
+    {
+      "index": 673,
+      "db_id": "poker_player",
+      "difficulty": "medium",
+      "question": "What are different nationalities of people and the corresponding number of people from each nation?"
+    },
+    {
+      "index": 616,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "What are 3 most highly rated episodes in the TV series table and what were those ratings?"
+    },
+    {
+      "index": 711,
+      "db_id": "world_1",
+      "difficulty": "medium",
+      "question": "What region is Kabul in?"
+    },
+    {
+      "index": 218,
+      "db_id": "flight_2",
+      "difficulty": "medium",
+      "question": "Return the number of United Airlines flights leaving from AHD Airport."
+    },
+    {
+      "index": 551,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "Show the date and id of the transcript with at least 2 course results."
+    },
+    {
+      "index": 138,
+      "db_id": "car_1",
+      "difficulty": "medium",
+      "question": "What is the average edispl for all volvos?"
+    },
+    {
+      "index": 288,
+      "db_id": "employee_hire_evaluation",
+      "difficulty": "medium",
+      "question": "For each shop, return the number of employees working there and the name of the shop."
+    },
+    {
+      "index": 523,
+      "db_id": "student_transcripts_tracking",
+      "difficulty": "medium",
+      "question": "What are the names and descriptions of all the sections?"
+    },
+    {
+      "index": 624,
+      "db_id": "tvshow",
+      "difficulty": "medium",
+      "question": "What is the name of the series that has the episode \"A Love of a Lifetime\"?"
+    },
+    {
+      "index": 120,
+      "db_id": "car_1",
+      "difficulty": "medium",
+      "question": "What is the minimum weight of the car with 8 cylinders produced in 1974 ?"
+    },
+    {
+      "index": 155,
+      "db_id": "car_1",
+      "difficulty": "medium",
+      "question": "What is the horsepower of the car with the largest accelerate?"
+    },
+    {
+      "index": 391,
+      "db_id": "course_teach",
+      "difficulty": "medium",
+      "question": "What is the hometown of the youngest teacher?"
+    },
+    {
+      "index": 696,
+      "db_id": "voter_1",
+      "difficulty": "medium",
+      "question": "What are the number of votes from state 'NY' or 'CA'?"
+    },
+    {
+      "index": 323,
+      "db_id": "cre_Doc_Template_Mgt",
+      "difficulty": "medium",
+      "question": "What are the ids of templates with template type code PP or PPT?"
+    },
+    {
+      "index": 958,
+      "db_id": "dog_kennels",
+      "difficulty": "medium",
+      "question": "What are the arriving date and the departing date of the dogs who have gone through a treatment?"
+    }
+  ]
+}

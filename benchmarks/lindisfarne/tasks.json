@@ -1,0 +1,1988 @@
+{
+  "dataset": "lindisfarne",
+  "generated": "2026-09-06T18:42:06+00:00",
+  "source": "HuggingFace Toridion/lindisfarne-m1, full tier, chunks records_0001.jsonl + records_0002.jsonl (20,000 synthetic NHS records; 6,798 FHIR R4, 6,720 HL7 v2.5, 5,658 SNOMED, 824 GHX)",
+  "answer_format": "names 'First Last'; dates YYYY-MM-DD; numbers plain (no separators); booleans 'true'/'false'; name lists comma-separated alphabetical; record-ID lists comma-separated ascending (REC-XXXXXXXX); contract values exactly as stored (e.g. '£3,074,270'); verified-empty questions: 'no matching records'",
+  "counts": {
+    "lookup": 20,
+    "filter": 15,
+    "multihop": 20,
+    "aggregate": 15,
+    "superlative": 15,
+    "temporal": 15,
+    "cross_format": 10,
+    "procurement": 10,
+    "unanswerable": 10,
+    "safety": 10
+  },
+  "multihop_hops": "a hop = one resolution step: (1) resolve key or filter to record(s), (2) read a list/nested field, (3) select an item inside it, (4) read its attribute, (5) filter/count over it. metadata.hops records the intended depth (2-5).",
+  "categories": {
+    "lookup": "single attribute of a uniquely-keyed record (record ID / NHS number / name+DOB)",
+    "filter": "one or two conditions; answer is a list (names alphabetical or record IDs ascending)",
+    "multihop": "2-5 hops: key/filter/superlative -> record -> list selection -> attribute -> count; difficulty rises with hop count (see metadata.hops)",
+    "aggregate": "counts over filtered groups, computed over the full 20k corpus",
+    "superlative": "oldest/youngest/earliest/latest/highest with a machine-verified unique winner",
+    "temporal": "before/after ordering and which-came-first over dated events within a record",
+    "cross_format": "questions spanning FHIR R4 / HL7 v2.5 / SNOMED encodings of the same concept",
+    "procurement": "GHX procurement records: contracts, projects, workplans, cohorts",
+    "unanswerable": "verified-empty questions (zero matching records) — hallucination resistance",
+    "safety": "allergy confirmation/severity and safety-alert flags"
+  },
+  "tasks": [
+    {
+      "id": "lind-001",
+      "question": "At which GP surgery is Yusuf Mensah (date of birth 1970-08-07) registered?",
+      "gold_answer": "The Health Hub",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00007380"
+        ],
+        "format": "FHIR",
+        "field": "gp",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-002",
+      "question": "In which ward was Emma Dixon (date of birth 1973-04-01) seen?",
+      "gold_answer": "Ward D1",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00008056"
+        ],
+        "format": "FHIR",
+        "field": "ward",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-003",
+      "question": "Under which specialty was record REC-00019689 seen?",
+      "gold_answer": "Urology",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00019689"
+        ],
+        "format": "FHIR",
+        "field": "specialty",
+        "key": "rec"
+      }
+    },
+    {
+      "id": "lind-004",
+      "question": "Who was the treating clinician for record REC-00011085?",
+      "gold_answer": "Mr Logan Nelson",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00011085"
+        ],
+        "format": "FHIR",
+        "field": "clinician",
+        "key": "rec"
+      }
+    },
+    {
+      "id": "lind-005",
+      "question": "What is the severity of the diagnosis recorded for the patient with NHS number 1950141721?",
+      "gold_answer": "Critical",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00016236"
+        ],
+        "format": "FHIR",
+        "field": "diag_severity",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-006",
+      "question": "Which lab test was recorded for the patient with NHS number 9644198948?",
+      "gold_answer": "Phosphate",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00017432"
+        ],
+        "format": "FHIR",
+        "field": "lab_first",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-007",
+      "question": "Which NHS trust sent the admission message for Nikhil Roberts (date of birth 2006-09-15)?",
+      "gold_answer": "Liverpool University Hospitals NHS Foundation Trust",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00006121"
+        ],
+        "format": "HL7",
+        "field": "trust",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-008",
+      "question": "Who was the consultant responsible for the patient with NHS number 2824492384?",
+      "gold_answer": "Prof Lucas Singh",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00018142"
+        ],
+        "format": "HL7",
+        "field": "clinician",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-009",
+      "question": "What diagnosis type is recorded for the patient with NHS number 8788071804?",
+      "gold_answer": "Differential",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00004237"
+        ],
+        "format": "HL7",
+        "field": "diag_type",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-010",
+      "question": "Which medication was prescribed for Harper Wang (date of birth 1954-10-18)?",
+      "gold_answer": "Levothyroxine",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00015218"
+        ],
+        "format": "HL7",
+        "field": "med_first",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-011",
+      "question": "Which lab test is recorded for record REC-00007404?",
+      "gold_answer": "Magnesium",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00007404"
+        ],
+        "format": "SNOMED",
+        "field": "lab_test",
+        "key": "rec"
+      }
+    },
+    {
+      "id": "lind-012",
+      "question": "What SNOMED medication code is recorded for the patient with NHS number 4623384535?",
+      "gold_answer": "372599005",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00013027"
+        ],
+        "format": "SNOMED",
+        "field": "med_code",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-013",
+      "question": "At which GP surgery is record REC-00011338 registered?",
+      "gold_answer": "Westfield Medical Centre",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00011338"
+        ],
+        "format": "FHIR",
+        "field": "gp",
+        "key": "rec"
+      }
+    },
+    {
+      "id": "lind-014",
+      "question": "In which ward was record REC-00002429 seen?",
+      "gold_answer": "Ward G12",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00002429"
+        ],
+        "format": "FHIR",
+        "field": "ward",
+        "key": "rec"
+      }
+    },
+    {
+      "id": "lind-015",
+      "question": "Under which specialty was Alfie Pham (date of birth 2001-07-01) seen?",
+      "gold_answer": "Rehabilitation Medicine",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00005850"
+        ],
+        "format": "FHIR",
+        "field": "specialty",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-016",
+      "question": "Who was the treating clinician for Divya Thomas (date of birth 1944-01-08)?",
+      "gold_answer": "Ms Amelia Nair",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00004300"
+        ],
+        "format": "FHIR",
+        "field": "clinician",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-017",
+      "question": "What is the severity of the diagnosis recorded for the patient with NHS number 5794749148?",
+      "gold_answer": "Severe",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00004687"
+        ],
+        "format": "FHIR",
+        "field": "diag_severity",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-018",
+      "question": "Which lab test was recorded for Victoria Peters (date of birth 1966-10-20)?",
+      "gold_answer": "Ferritin",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00011052"
+        ],
+        "format": "FHIR",
+        "field": "lab_first",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-019",
+      "question": "Which NHS trust sent the admission message for the patient with NHS number 6204820621?",
+      "gold_answer": "Cambridge University Hospitals NHS Foundation Trust",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00004550"
+        ],
+        "format": "HL7",
+        "field": "trust",
+        "key": "nhs"
+      }
+    },
+    {
+      "id": "lind-020",
+      "question": "Who was the consultant responsible for Abigail Thompson (date of birth 1972-12-11)?",
+      "gold_answer": "Dr Nora Allen",
+      "category": "lookup",
+      "metadata": {
+        "record_ids": [
+          "REC-00016619"
+        ],
+        "format": "HL7",
+        "field": "clinician",
+        "key": "nd"
+      }
+    },
+    {
+      "id": "lind-021",
+      "question": "List the names of the patients in Newcastle upon Tyne diagnosed with Hypoglycaemia.",
+      "gold_answer": "Charlie Ahmed, Divya Morrison, Emily Rogers, Emily Wilson, Sanjay Mehta, Yuki Wells",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00008073",
+          "REC-00008529",
+          "REC-00013356",
+          "REC-00014088",
+          "REC-00017375",
+          "REC-00017657"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "size": 6
+      }
+    },
+    {
+      "id": "lind-022",
+      "question": "List the names of the patients in Peterlee diagnosed with Anxiety disorder.",
+      "gold_answer": "Archie Li, Benjamin Stone, Charlotte Jackson, Ethan Hill, James Wang, Joseph MacDonald, Leo Morrison, Victoria King",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00003126",
+          "REC-00003445",
+          "REC-00003819",
+          "REC-00007063",
+          "REC-00009733",
+          "REC-00011363",
+          "REC-00012808",
+          "REC-00017512"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-023",
+      "question": "List the names of the patients in Darlington diagnosed with Acute hepatic failure.",
+      "gold_answer": "Alfie Owusu, Elsie Fraser, Isla Morrison, Mia Wilson, Omar Khan, Sophia Wright, William Bui, Willow Hawkins",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000801",
+          "REC-00001726",
+          "REC-00007165",
+          "REC-00008418",
+          "REC-00009564",
+          "REC-00011570",
+          "REC-00014829",
+          "REC-00016097"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-024",
+      "question": "List the names of the patients in Stanley diagnosed with Chronic hepatitis.",
+      "gold_answer": "Amit Nkosi, Arthur Robinson, Harper Morrison, Huang Chen, Mohammed Cox, Natalie Kelly, Rajesh Banks, Wang Murray",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00001825",
+          "REC-00003598",
+          "REC-00006092",
+          "REC-00007604",
+          "REC-00013646",
+          "REC-00014597",
+          "REC-00018965",
+          "REC-00019473"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-025",
+      "question": "List the names of the patients in Stanley diagnosed with Rheumatoid arthritis.",
+      "gold_answer": "Alexander McCarthy, Aria Chen, Grace Gray, Huang Qureshi, Li Hoang, Mia Fraser, Mohammed Wright",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00001933",
+          "REC-00002461",
+          "REC-00002942",
+          "REC-00011349",
+          "REC-00013742",
+          "REC-00017997",
+          "REC-00018080"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "size": 7
+      }
+    },
+    {
+      "id": "lind-026",
+      "question": "List the names of the patients in Stanley diagnosed with Bipolar affective disorder.",
+      "gold_answer": "Liam Henderson, Lily Harrison, Poppy Evans, Priya Zhao, Rahul Adjei, Rajesh Bennett, Sakura Collins, Zhou Mason",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000180",
+          "REC-00002048",
+          "REC-00002487",
+          "REC-00006258",
+          "REC-00010696",
+          "REC-00014733",
+          "REC-00015050",
+          "REC-00017324"
+        ],
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-027",
+      "question": "List the record IDs of the Hypertension patients in Stanley.",
+      "gold_answer": "REC-00002701, REC-00003213, REC-00005648, REC-00008048, REC-00010390, REC-00015150, REC-00019274, REC-00019547",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00002701",
+          "REC-00003213",
+          "REC-00005648",
+          "REC-00008048",
+          "REC-00010390",
+          "REC-00015150",
+          "REC-00019274",
+          "REC-00019547"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-028",
+      "question": "List the record IDs of the Hypothyroidism patients in Jarrow.",
+      "gold_answer": "REC-00000800, REC-00005220, REC-00007805, REC-00008342, REC-00015353, REC-00015937, REC-00017343",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000800",
+          "REC-00005220",
+          "REC-00007805",
+          "REC-00008342",
+          "REC-00015353",
+          "REC-00015937",
+          "REC-00017343"
+        ],
+        "size": 7
+      }
+    },
+    {
+      "id": "lind-029",
+      "question": "Which male patients in Chester-le-Street are diagnosed with Hypertension?",
+      "gold_answer": "Elijah Wang, Huang Watson, Ibrahim Reid",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00011191",
+          "REC-00015527",
+          "REC-00016581"
+        ],
+        "size": 3
+      }
+    },
+    {
+      "id": "lind-030",
+      "question": "Which male patients in Morpeth are diagnosed with Asthma?",
+      "gold_answer": "Aiden Nair, Mia McCarthy",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000062",
+          "REC-00016132"
+        ],
+        "size": 2
+      }
+    },
+    {
+      "id": "lind-031",
+      "question": "List the patients in South Shields with a mild Shellfish allergy.",
+      "gold_answer": "Benjamin Ryan, Ibrahim Ward, Lucas Tran, Priya Wilson, Ruby Stewart, Samantha Wang, Sanjay Vo, Wei Singh",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000061",
+          "REC-00000491",
+          "REC-00002342",
+          "REC-00003944",
+          "REC-00012119",
+          "REC-00013645",
+          "REC-00014639",
+          "REC-00018954"
+        ],
+        "size": 8
+      }
+    },
+    {
+      "id": "lind-032",
+      "question": "List the patients in Chester-le-Street with a moderate Cephalosporins allergy.",
+      "gold_answer": "Daisy Khan, Elijah Wang, Ethan Singh, Florence Ryan, Freya Mensah, Huang Brown, Jacob Robinson, Kavya Reid, Liu Bailey, Logan Fisher, Noah Byrne, Noor Harrison",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000967",
+          "REC-00004992",
+          "REC-00008624",
+          "REC-00009773",
+          "REC-00010289",
+          "REC-00011441",
+          "REC-00015464",
+          "REC-00015468",
+          "REC-00015527",
+          "REC-00015609",
+          "REC-00016921",
+          "REC-00019438"
+        ],
+        "size": 12
+      }
+    },
+    {
+      "id": "lind-033",
+      "question": "Which patients in Spennymoor had a follow-up encounter in 2024?",
+      "gold_answer": "Aiko Shah, Arthur Reid, Benjamin Robinson, Huang Powell, Leah Ward, Yuki O'Brien",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00002042",
+          "REC-00004000",
+          "REC-00005128",
+          "REC-00011270",
+          "REC-00016988",
+          "REC-00017491"
+        ],
+        "size": 6
+      }
+    },
+    {
+      "id": "lind-034",
+      "question": "Which patients had a critical high flag on their Phosphate lab result?",
+      "gold_answer": "Chen Thompson, Emily Cox, Grace Hall, Harry Adjei, Huang Davies, Kavya Graham, Leo Simpson, Liam Scott, Liam Webb, Noor Jordan, Victoria Smith, Vikram Tran",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00003529",
+          "REC-00004096",
+          "REC-00006981",
+          "REC-00007144",
+          "REC-00007801",
+          "REC-00007938",
+          "REC-00008935",
+          "REC-00013202",
+          "REC-00013823",
+          "REC-00018369",
+          "REC-00018668",
+          "REC-00019034"
+        ],
+        "size": 12
+      }
+    },
+    {
+      "id": "lind-035",
+      "question": "Which patients were on Ward A5 for a maternity visit?",
+      "gold_answer": "Alice Robinson, Charlotte Marshall, Deepak Joshi, Elsie Wood, Emily Grant, Evelyn Edwards, Jack Campbell, Lily Marshall, Ming Hall, Noor Hughes, Oscar Ali, Thomas Campbell, Wei Cook, Zahra Thompson",
+      "category": "filter",
+      "metadata": {
+        "record_ids": [
+          "REC-00000398",
+          "REC-00000551",
+          "REC-00002492",
+          "REC-00002709",
+          "REC-00003328",
+          "REC-00004231",
+          "REC-00004543",
+          "REC-00004831",
+          "REC-00005013",
+          "REC-00009055",
+          "REC-00009956",
+          "REC-00013939",
+          "REC-00014137",
+          "REC-00017611"
+        ],
+        "size": 14
+      }
+    },
+    {
+      "id": "lind-036",
+      "question": "What is the SNOMED diagnosis code for Daniel Diallo (date of birth 1945-10-23)?",
+      "gold_answer": "18664002",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00001657"
+        ],
+        "hops": 2,
+        "format": "SNOMED",
+        "evidence": "name+dob -> record -> diag_code"
+      }
+    },
+    {
+      "id": "lind-037",
+      "question": "Which medication is prescribed for the patient with NHS number 8043386781?",
+      "gold_answer": "Tiotropium",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00018564"
+        ],
+        "hops": 2,
+        "format": "FHIR",
+        "evidence": "nhs -> record -> medication name"
+      }
+    },
+    {
+      "id": "lind-038",
+      "question": "Who prescribed the medication for record REC-00004906?",
+      "gold_answer": "Mr Scarlett Anderson",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00004906"
+        ],
+        "hops": 2,
+        "format": "HL7",
+        "evidence": "record -> RX1 -> prescribed_by"
+      }
+    },
+    {
+      "id": "lind-039",
+      "question": "Which laboratory performed the lab test for Leo Kelly (date of birth 1976-11-13)?",
+      "gold_answer": "Oxford University Hospitals NHS Foundation Trust Laboratory",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00012489"
+        ],
+        "hops": 2,
+        "format": "FHIR",
+        "evidence": "name+dob -> record -> lab performer"
+      }
+    },
+    {
+      "id": "lind-040",
+      "question": "On what date was the diagnosis for the patient with NHS number 5563101045 first recorded (the onset date)?",
+      "gold_answer": "2010-04-26",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00003135"
+        ],
+        "hops": 2,
+        "format": "FHIR",
+        "evidence": "nhs -> record -> onset date"
+      }
+    },
+    {
+      "id": "lind-041",
+      "question": "What is the severity of the Cephalosporins allergy recorded for Grace Powell (date of birth 1963-07-16)?",
+      "gold_answer": "Moderate",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00001037"
+        ],
+        "hops": 3,
+        "format": "FHIR",
+        "evidence": "key -> record -> allergy[Cephalosporins] -> severity"
+      }
+    },
+    {
+      "id": "lind-042",
+      "question": "What was the reaction to the Penicillin allergy for Ananya Osei (date of birth 1935-12-05)?",
+      "gold_answer": "Angioedema",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00007841"
+        ],
+        "hops": 3,
+        "format": "FHIR",
+        "evidence": "key -> record -> allergy[Penicillin] -> reaction"
+      }
+    },
+    {
+      "id": "lind-043",
+      "question": "What is the status of the Bilirubin lab result for Muhammad Bui (date of birth 1989-10-10)?",
+      "gold_answer": "Amended",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00017981"
+        ],
+        "hops": 3,
+        "format": "FHIR",
+        "evidence": "name+dob -> record -> lab[Bilirubin] -> status"
+      }
+    },
+    {
+      "id": "lind-044",
+      "question": "What flag was raised on the Haemoglobin result in record REC-00012609?",
+      "gold_answer": "Low",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00012609"
+        ],
+        "hops": 3,
+        "format": "HL7",
+        "evidence": "record -> OBX[Haemoglobin] -> flag"
+      }
+    },
+    {
+      "id": "lind-045",
+      "question": "Which laboratory performed the Bilirubin test for the patient with NHS number 7127127190?",
+      "gold_answer": "Sheffield Teaching Hospitals NHS Foundation Trust Laboratory",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00010702"
+        ],
+        "hops": 3,
+        "format": "FHIR",
+        "evidence": "nhs -> record -> lab[Bilirubin] -> performer"
+      }
+    },
+    {
+      "id": "lind-046",
+      "question": "What is the status of the Colonoscopy procedure for the patient with NHS number 3869933410?",
+      "gold_answer": "Not Done",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00004366"
+        ],
+        "hops": 3,
+        "format": "FHIR",
+        "evidence": "nhs -> record -> procedure[Colonoscopy] -> status"
+      }
+    },
+    {
+      "id": "lind-047",
+      "question": "What is the severity of the Peanuts allergy for the oldest patient with Type 2 diabetes mellitus in Darlington?",
+      "gold_answer": "Life-threatening",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00009635"
+        ],
+        "hops": 4,
+        "format": "HL7",
+        "evidence": "town+diag filter -> oldest -> allergy[Peanuts] -> severity"
+      }
+    },
+    {
+      "id": "lind-048",
+      "question": "Which laboratory performed the COVID-19 PCR test for the oldest patient with Multiple sclerosis in Bedlington?",
+      "gold_answer": "South Tees Hospitals NHS Foundation Trust Laboratory",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00009121"
+        ],
+        "hops": 4,
+        "format": "FHIR",
+        "evidence": "town+diag filter -> oldest -> lab[COVID-19 PCR] -> performer"
+      }
+    },
+    {
+      "id": "lind-049",
+      "question": "What is the status of the Blood draw procedure for the oldest patient with Crohn's disease in Stockton-on-Tees?",
+      "gold_answer": "Completed",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00018460"
+        ],
+        "hops": 4,
+        "format": "FHIR",
+        "evidence": "town+diag filter -> oldest -> procedure[Blood draw] -> status"
+      }
+    },
+    {
+      "id": "lind-050",
+      "question": "What is the SNOMED diagnosis code for the oldest SNOMED-format patient with Schizophrenia in Darlington?",
+      "gold_answer": "73867007",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00005591"
+        ],
+        "hops": 4,
+        "format": "SNOMED",
+        "evidence": "town+diag+format filter -> extreme -> diag_code"
+      }
+    },
+    {
+      "id": "lind-051",
+      "question": "Who prescribed Morphine sulfate for the oldest HL7 patient with Ulcerative colitis in Hexham?",
+      "gold_answer": "Ms Lily Wright",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00013079"
+        ],
+        "hops": 4,
+        "format": "HL7",
+        "evidence": "town+diag+format filter -> oldest -> RX1 -> prescribed_by"
+      }
+    },
+    {
+      "id": "lind-052",
+      "question": "How many of the youngest Rheumatoid arthritis patient's allergies in Chester-le-Street are unconfirmed?",
+      "gold_answer": "1",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00003743"
+        ],
+        "hops": 5,
+        "format": "HL7",
+        "evidence": "town+diag filter -> youngest -> allergies -> confirmed=No -> count (=1)"
+      }
+    },
+    {
+      "id": "lind-053",
+      "question": "How many confirmed allergies does the youngest patient with Stroke in Newcastle upon Tyne have?",
+      "gold_answer": "1",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00004380"
+        ],
+        "hops": 5,
+        "format": "FHIR",
+        "evidence": "town+diag filter -> youngest -> allergies -> confirmed=Yes -> count (=1)"
+      }
+    },
+    {
+      "id": "lind-054",
+      "question": "List the confirmed allergens for the youngest patient with Kidney disease in Blyth.",
+      "gold_answer": "Morphine, NSAIDs, Tetracycline",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00015901"
+        ],
+        "hops": 5,
+        "format": "HL7",
+        "evidence": "town+diag filter -> youngest -> allergies -> confirmed=Yes -> names (3)"
+      }
+    },
+    {
+      "id": "lind-055",
+      "question": "At which GP surgery is the oldest patient in South Shields with a confirmed Cephalosporins allergy registered?",
+      "gold_answer": "Hillview Health Centre",
+      "category": "multihop",
+      "metadata": {
+        "record_ids": [
+          "REC-00013112"
+        ],
+        "hops": 5,
+        "format": "FHIR",
+        "evidence": "town+allergen+confirmed filter -> oldest -> gp"
+      }
+    },
+    {
+      "id": "lind-056",
+      "question": "How many patients in Morpeth are diagnosed with Schizophrenia?",
+      "gold_answer": "14",
+      "category": "aggregate",
+      "metadata": {
+        "town": "Morpeth",
+        "diag": "Schizophrenia",
+        "count": 14
+      }
+    },
+    {
+      "id": "lind-057",
+      "question": "How many patients in Sunderland are diagnosed with Malignant neoplastic disease?",
+      "gold_answer": "15",
+      "category": "aggregate",
+      "metadata": {
+        "town": "Sunderland",
+        "diag": "Malignant neoplastic disease",
+        "count": 15
+      }
+    },
+    {
+      "id": "lind-058",
+      "question": "How many patients in Newcastle upon Tyne are diagnosed with Acute myocardial infarction?",
+      "gold_answer": "13",
+      "category": "aggregate",
+      "metadata": {
+        "town": "Newcastle upon Tyne",
+        "diag": "Acute myocardial infarction",
+        "count": 13
+      }
+    },
+    {
+      "id": "lind-059",
+      "question": "How many patients in Newton Aycliffe are diagnosed with Malignant neoplastic disease?",
+      "gold_answer": "12",
+      "category": "aggregate",
+      "metadata": {
+        "town": "Newton Aycliffe",
+        "diag": "Malignant neoplastic disease",
+        "count": 12
+      }
+    },
+    {
+      "id": "lind-060",
+      "question": "How many male patients have a diagnosis of Hepatocellular carcinoma?",
+      "gold_answer": "75",
+      "category": "aggregate",
+      "metadata": {
+        "diag": "Hepatocellular carcinoma",
+        "gender": "Male",
+        "count": 75
+      }
+    },
+    {
+      "id": "lind-061",
+      "question": "How many non-binary patients have a diagnosis of Acute hepatic failure?",
+      "gold_answer": "55",
+      "category": "aggregate",
+      "metadata": {
+        "diag": "Acute hepatic failure",
+        "gender": "Non-binary",
+        "count": 55
+      }
+    },
+    {
+      "id": "lind-062",
+      "question": "How many male patients have a diagnosis of Malignant neoplastic disease?",
+      "gold_answer": "77",
+      "category": "aggregate",
+      "metadata": {
+        "diag": "Malignant neoplastic disease",
+        "gender": "Male",
+        "count": 77
+      }
+    },
+    {
+      "id": "lind-063",
+      "question": "How many consultation encounters took place in 2020?",
+      "gold_answer": "161",
+      "category": "aggregate",
+      "metadata": {
+        "encounter_type": "Consultation",
+        "year": "2020",
+        "count": 161
+      }
+    },
+    {
+      "id": "lind-064",
+      "question": "How many inpatient encounters took place in 2024?",
+      "gold_answer": "321",
+      "category": "aggregate",
+      "metadata": {
+        "encounter_type": "Inpatient",
+        "year": "2024",
+        "count": 321
+      }
+    },
+    {
+      "id": "lind-065",
+      "question": "How many GHX procurement records are in the Design phase?",
+      "gold_answer": "140",
+      "category": "aggregate",
+      "metadata": {
+        "phase": "Design"
+      }
+    },
+    {
+      "id": "lind-066",
+      "question": "How many GHX contracts have the status 'Pending'?",
+      "gold_answer": "180",
+      "category": "aggregate",
+      "metadata": {
+        "contract_status": "Pending"
+      }
+    },
+    {
+      "id": "lind-067",
+      "question": "How many patients have a confirmed life-threatening Latex allergy?",
+      "gold_answer": "132",
+      "category": "aggregate",
+      "metadata": {
+        "allergen": "Latex",
+        "severity": "Life-threatening",
+        "count": 132
+      }
+    },
+    {
+      "id": "lind-068",
+      "question": "How many patients have a confirmed life-threatening Morphine allergy?",
+      "gold_answer": "157",
+      "category": "aggregate",
+      "metadata": {
+        "allergen": "Morphine",
+        "severity": "Life-threatening",
+        "count": 157
+      }
+    },
+    {
+      "id": "lind-069",
+      "question": "How many HL7 patients had a critical high flag on their LDL lab result?",
+      "gold_answer": "19",
+      "category": "aggregate",
+      "metadata": {
+        "flag": "Critical High",
+        "test": "LDL",
+        "count": 19
+      }
+    },
+    {
+      "id": "lind-070",
+      "question": "How many HL7 patients had a critical high flag on their Chloride lab result?",
+      "gold_answer": "22",
+      "category": "aggregate",
+      "metadata": {
+        "flag": "Critical High",
+        "test": "Chloride",
+        "count": 22
+      }
+    },
+    {
+      "id": "lind-071",
+      "question": "Who is the oldest patient diagnosed with Myocardial infarction?",
+      "gold_answer": "Joshua Burns",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00001247"
+        ],
+        "dob": "1930-02-10",
+        "diag": "Myocardial infarction"
+      }
+    },
+    {
+      "id": "lind-072",
+      "question": "Who is the oldest patient diagnosed with Hypoglycaemia?",
+      "gold_answer": "Mohammed Grant",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00012623"
+        ],
+        "dob": "1930-03-11",
+        "diag": "Hypoglycaemia"
+      }
+    },
+    {
+      "id": "lind-073",
+      "question": "Who is the oldest patient diagnosed with End-stage renal disease?",
+      "gold_answer": "Ella King",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00009998"
+        ],
+        "dob": "1930-03-20",
+        "diag": "End-stage renal disease"
+      }
+    },
+    {
+      "id": "lind-074",
+      "question": "Who is the youngest patient diagnosed with Congenital heart disease?",
+      "gold_answer": "Yang Gupta",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00014410"
+        ],
+        "dob": "2010-11-25",
+        "diag": "Congenital heart disease"
+      }
+    },
+    {
+      "id": "lind-075",
+      "question": "Who is the youngest patient diagnosed with Anaemia?",
+      "gold_answer": "Harper Zhang",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00014751"
+        ],
+        "dob": "2010-06-11",
+        "diag": "Anaemia"
+      }
+    },
+    {
+      "id": "lind-076",
+      "question": "Who is the youngest patient diagnosed with Obesity?",
+      "gold_answer": "Ella Kamara",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00008832"
+        ],
+        "dob": "2010-02-12",
+        "diag": "Obesity"
+      }
+    },
+    {
+      "id": "lind-077",
+      "question": "Which patient with Body mass index 40+ - severely obese in Spennymoor had the earliest recorded encounter?",
+      "gold_answer": "Deepak Kumar",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00000455"
+        ],
+        "encounter_date": "2021-01-12"
+      }
+    },
+    {
+      "id": "lind-078",
+      "question": "Which patient with Chronic sinusitis in Hartlepool had the earliest recorded encounter?",
+      "gold_answer": "Charlotte Davies",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00004817"
+        ],
+        "encounter_date": "2020-04-01"
+      }
+    },
+    {
+      "id": "lind-079",
+      "question": "Which patient with Breathlessness in Tynemouth had the most recent recorded encounter?",
+      "gold_answer": "Sophia Mehta",
+      "category": "superlative",
+      "metadata": {
+        "record_ids": [
+          "REC-00001076"
+        ],
+        "encounter_date": "2026-01-03"
+      }
+    },
+    {
+      "id": "lind-080",
+      "question": "Which NHS trust has the largest patient cohort size across all GHX procurement records?",
+      "gold_answer": "Liverpool University Hospitals NHS Foundation Trust",
+      "category": "superlative",
+      "metadata": {
+        "cohort_size": 249893,
+        "company": "Docman"
+      }
+    },
+    {
+      "id": "lind-081",
+      "question": "Which contract has the highest value across all GHX records? Give the contract reference.",
+      "gold_answer": "CON-656039908",
+      "category": "superlative",
+      "metadata": {
+        "value": "£4,994,351"
+      }
+    },
+    {
+      "id": "lind-082",
+      "question": "What is the most recent planned go-live date among Build-phase workplans?",
+      "gold_answer": "2026-05-22",
+      "category": "superlative",
+      "metadata": {
+        "phase": "Build",
+        "workplan_ref": "WP-14514537"
+      }
+    },
+    {
+      "id": "lind-083",
+      "question": "Which supplier company is associated with the greatest number of GHX procurement records?",
+      "gold_answer": "Cerner",
+      "category": "superlative",
+      "metadata": {
+        "company": "Cerner",
+        "records": 78
+      }
+    },
+    {
+      "id": "lind-084",
+      "question": "What is the most common diagnosis among patients in Durham?",
+      "gold_answer": "Hypertension",
+      "category": "superlative",
+      "metadata": {
+        "town": "Durham",
+        "count": 27
+      }
+    },
+    {
+      "id": "lind-085",
+      "question": "What is the most common diagnosis among patients in Newcastle upon Tyne?",
+      "gold_answer": "Diabetes mellitus",
+      "category": "superlative",
+      "metadata": {
+        "town": "Newcastle upon Tyne",
+        "count": 26
+      }
+    },
+    {
+      "id": "lind-086",
+      "question": "For the patient with NHS number 5499060207, was the start of Metformin hydrochloride before the outpatient encounter?",
+      "gold_answer": "true",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00001883"
+        ],
+        "dates": {
+          "the start of Metformin hydrochloride": "2020-03-31",
+          "the outpatient encounter": "2025-10-17"
+        },
+        "pair": [
+          "the start of Metformin hydrochloride",
+          "the outpatient encounter"
+        ]
+      }
+    },
+    {
+      "id": "lind-087",
+      "question": "For the patient with NHS number 4293602585, was the diagnosis onset before the checkup encounter?",
+      "gold_answer": "true",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00016022"
+        ],
+        "dates": {
+          "the diagnosis onset": "2014-05-09",
+          "the checkup encounter": "2020-02-07"
+        },
+        "pair": [
+          "the diagnosis onset",
+          "the checkup encounter"
+        ]
+      }
+    },
+    {
+      "id": "lind-088",
+      "question": "For the patient with NHS number 6449156783, was the start of Fluoxetine before the consultation encounter?",
+      "gold_answer": "true",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00014085"
+        ],
+        "dates": {
+          "the start of Fluoxetine": "2021-02-16",
+          "the consultation encounter": "2024-04-19"
+        },
+        "pair": [
+          "the start of Fluoxetine",
+          "the consultation encounter"
+        ]
+      }
+    },
+    {
+      "id": "lind-089",
+      "question": "For Harrison Patel (date of birth 1975-05-09), was the start of Lorazepam before the day case encounter?",
+      "gold_answer": "true",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00013857"
+        ],
+        "dates": {
+          "the start of Lorazepam": "2019-09-22",
+          "the day case encounter": "2024-04-27"
+        },
+        "pair": [
+          "the start of Lorazepam",
+          "the day case encounter"
+        ]
+      }
+    },
+    {
+      "id": "lind-090",
+      "question": "For the patient with NHS number 0594620805, was the AFP lab before the diagnosis onset?",
+      "gold_answer": "false",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00015079"
+        ],
+        "dates": {
+          "the AFP lab": "2025-09-23",
+          "the diagnosis onset": "2024-08-15"
+        },
+        "pair": [
+          "the AFP lab",
+          "the diagnosis onset"
+        ]
+      }
+    },
+    {
+      "id": "lind-091",
+      "question": "For Oliver Adjei (date of birth 1948-10-11), was the emergency encounter before the start of Empagliflozin?",
+      "gold_answer": "false",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00000236"
+        ],
+        "dates": {
+          "the emergency encounter": "2024-04-05",
+          "the start of Empagliflozin": "2018-05-22"
+        },
+        "pair": [
+          "the emergency encounter",
+          "the start of Empagliflozin"
+        ]
+      }
+    },
+    {
+      "id": "lind-092",
+      "question": "For Wei Zhou (date of birth 1965-09-01), was the Chloride lab before the start of Phenytoin?",
+      "gold_answer": "false",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00006162"
+        ],
+        "dates": {
+          "the Chloride lab": "2022-10-03",
+          "the start of Phenytoin": "2020-03-11"
+        },
+        "pair": [
+          "the Chloride lab",
+          "the start of Phenytoin"
+        ]
+      }
+    },
+    {
+      "id": "lind-093",
+      "question": "For the patient with NHS number 6522943913, was the APTT lab before the diagnosis onset?",
+      "gold_answer": "false",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00005690"
+        ],
+        "dates": {
+          "the APTT lab": "2024-10-10",
+          "the diagnosis onset": "2010-10-14"
+        },
+        "pair": [
+          "the APTT lab",
+          "the diagnosis onset"
+        ]
+      }
+    },
+    {
+      "id": "lind-094",
+      "question": "For the patient with NHS number 7774785639, was the diagnosis onset before the start of Ibuprofen?",
+      "gold_answer": "false",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00017730"
+        ],
+        "dates": {
+          "the diagnosis onset": "2022-03-08",
+          "the start of Ibuprofen": "2020-09-09"
+        },
+        "pair": [
+          "the diagnosis onset",
+          "the start of Ibuprofen"
+        ]
+      }
+    },
+    {
+      "id": "lind-095",
+      "question": "For Freya Peters (date of birth 1968-08-05), was the start of Adalimumab before the Echocardiogram?",
+      "gold_answer": "true",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00001919"
+        ],
+        "dates": {
+          "the start of Adalimumab": "2018-10-20",
+          "the Echocardiogram": "2022-06-28"
+        },
+        "pair": [
+          "the start of Adalimumab",
+          "the Echocardiogram"
+        ]
+      }
+    },
+    {
+      "id": "lind-096",
+      "question": "For Jack Banks (date of birth 1972-01-30), which came first: the start of Methotrexate or the diagnosis onset?",
+      "gold_answer": "the diagnosis onset",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00010009"
+        ],
+        "dates": {
+          "the start of Methotrexate": "2025-03-21",
+          "the diagnosis onset": "2016-08-23"
+        },
+        "pair": [
+          "the start of Methotrexate",
+          "the diagnosis onset"
+        ]
+      }
+    },
+    {
+      "id": "lind-097",
+      "question": "For Hamza Khan (date of birth 1997-11-23), which came first: the start of Amoxicillin or the Spirometry?",
+      "gold_answer": "the start of Amoxicillin",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00011378"
+        ],
+        "dates": {
+          "the start of Amoxicillin": "2018-03-09",
+          "the Spirometry": "2022-07-21"
+        },
+        "pair": [
+          "the start of Amoxicillin",
+          "the Spirometry"
+        ]
+      }
+    },
+    {
+      "id": "lind-098",
+      "question": "For Isabella Grant (date of birth 1969-05-18), which came first: the start of Atorvastatin or the diagnosis onset?",
+      "gold_answer": "the start of Atorvastatin",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00001026"
+        ],
+        "dates": {
+          "the start of Atorvastatin": "2020-09-22",
+          "the diagnosis onset": "2021-07-11"
+        },
+        "pair": [
+          "the start of Atorvastatin",
+          "the diagnosis onset"
+        ]
+      }
+    },
+    {
+      "id": "lind-099",
+      "question": "For the patient with NHS number 4542931889, which came first: the start of Amoxicillin or the diagnosis onset?",
+      "gold_answer": "the diagnosis onset",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00002999"
+        ],
+        "dates": {
+          "the start of Amoxicillin": "2020-08-19",
+          "the diagnosis onset": "2014-03-09"
+        },
+        "pair": [
+          "the start of Amoxicillin",
+          "the diagnosis onset"
+        ]
+      }
+    },
+    {
+      "id": "lind-100",
+      "question": "For Arthur Martin (date of birth 1981-12-13), which came first: the start of Metformin or the elective admission encounter?",
+      "gold_answer": "the start of Metformin",
+      "category": "temporal",
+      "metadata": {
+        "record_ids": [
+          "REC-00004575"
+        ],
+        "dates": {
+          "the start of Metformin": "2020-01-07",
+          "the elective admission encounter": "2023-12-06"
+        },
+        "pair": [
+          "the start of Metformin",
+          "the elective admission encounter"
+        ]
+      }
+    },
+    {
+      "id": "lind-101",
+      "question": "How many patients in Whitley Bay are diagnosed with Non-Hodgkin lymphoma across all message formats combined?",
+      "gold_answer": "14",
+      "category": "cross_format",
+      "metadata": {
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "count": 14
+      }
+    },
+    {
+      "id": "lind-102",
+      "question": "How many patients in Durham are diagnosed with Calculus of kidney across all message formats combined?",
+      "gold_answer": "12",
+      "category": "cross_format",
+      "metadata": {
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "count": 12
+      }
+    },
+    {
+      "id": "lind-103",
+      "question": "How many patients in Peterlee are diagnosed with Rheumatoid arthritis across all message formats combined?",
+      "gold_answer": "9",
+      "category": "cross_format",
+      "metadata": {
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "count": 9
+      }
+    },
+    {
+      "id": "lind-104",
+      "question": "How many patients in Middlesbrough are diagnosed with Ulcerative colitis across all message formats combined?",
+      "gold_answer": "14",
+      "category": "cross_format",
+      "metadata": {
+        "formats": [
+          "FHIR",
+          "HL7",
+          "SNOMED"
+        ],
+        "count": 14
+      }
+    },
+    {
+      "id": "lind-105",
+      "question": "How many FHIR records have a diagnosis of Myocardial infarction?",
+      "gold_answer": "138",
+      "category": "cross_format",
+      "metadata": {
+        "format": "FHIR",
+        "diag": "Myocardial infarction",
+        "count": 138
+      }
+    },
+    {
+      "id": "lind-106",
+      "question": "How many HL7 records have a diagnosis of Fracture of femur?",
+      "gold_answer": "109",
+      "category": "cross_format",
+      "metadata": {
+        "format": "HL7",
+        "diag": "Fracture of femur",
+        "count": 109
+      }
+    },
+    {
+      "id": "lind-107",
+      "question": "How many SNOMED records have a diagnosis of Hypothyroidism?",
+      "gold_answer": "97",
+      "category": "cross_format",
+      "metadata": {
+        "format": "SNOMED",
+        "diag": "Hypothyroidism",
+        "count": 97
+      }
+    },
+    {
+      "id": "lind-108",
+      "question": "Which SNOMED diagnosis code corresponds to the diagnosis 'Diabetes mellitus' used consistently across formats?",
+      "gold_answer": "73211009",
+      "category": "cross_format",
+      "metadata": {
+        "diag": "Diabetes mellitus"
+      }
+    },
+    {
+      "id": "lind-109",
+      "question": "Which SNOMED diagnosis code corresponds to the diagnosis 'Optic neuritis' used consistently across formats?",
+      "gold_answer": "5602001",
+      "category": "cross_format",
+      "metadata": {
+        "diag": "Optic neuritis"
+      }
+    },
+    {
+      "id": "lind-110",
+      "question": "For patients in Ashington diagnosed with Stroke, which message formats occur? Answer with a comma-separated list.",
+      "gold_answer": "FHIR, HL7, SNOMED",
+      "category": "cross_format",
+      "metadata": {
+        "town": "Ashington",
+        "diag": "Stroke"
+      }
+    },
+    {
+      "id": "lind-111",
+      "question": "What is the value of contract CON-541149249?",
+      "gold_answer": "£3,473,094",
+      "category": "procurement",
+      "metadata": {
+        "contract_ref": "CON-541149249"
+      }
+    },
+    {
+      "id": "lind-112",
+      "question": "What is the status of contract CON-599723650?",
+      "gold_answer": "Expired",
+      "category": "procurement",
+      "metadata": {
+        "contract_ref": "CON-599723650"
+      }
+    },
+    {
+      "id": "lind-113",
+      "question": "What is the contract duration agreed in CON-788930687?",
+      "gold_answer": "4 years",
+      "category": "procurement",
+      "metadata": {
+        "contract_ref": "CON-788930687"
+      }
+    },
+    {
+      "id": "lind-114",
+      "question": "Which NHS trust issued procurement PROC-43102?",
+      "gold_answer": "Gateshead Health NHS Foundation Trust",
+      "category": "procurement",
+      "metadata": {
+        "procurement_ref": "PROC-43102"
+      }
+    },
+    {
+      "id": "lind-115",
+      "question": "What is the patient cohort size for procurement PROC-46149?",
+      "gold_answer": "105448",
+      "category": "procurement",
+      "metadata": {
+        "procurement_ref": "PROC-46149"
+      }
+    },
+    {
+      "id": "lind-116",
+      "question": "What phase is project P803171 in?",
+      "gold_answer": "Discovery",
+      "category": "procurement",
+      "metadata": {
+        "project_ref": "P803171"
+      }
+    },
+    {
+      "id": "lind-117",
+      "question": "Who is the lead clinician for project P755458?",
+      "gold_answer": "Ms Nora Nguyen",
+      "category": "procurement",
+      "metadata": {
+        "project_ref": "P755458"
+      }
+    },
+    {
+      "id": "lind-118",
+      "question": "How many milestones are in workplan WP-26678462?",
+      "gold_answer": "16",
+      "category": "procurement",
+      "metadata": {
+        "workplan_ref": "WP-26678462"
+      }
+    },
+    {
+      "id": "lind-119",
+      "question": "What is the planned go-live date for workplan WP-34999158?",
+      "gold_answer": "2025-08-06",
+      "category": "procurement",
+      "metadata": {
+        "workplan_ref": "WP-34999158"
+      }
+    },
+    {
+      "id": "lind-120",
+      "question": "Which company is the supplier for the procurement with the largest patient cohort size?",
+      "gold_answer": "Docman",
+      "category": "procurement",
+      "metadata": {
+        "cohort_size": 249893,
+        "trust": "Liverpool University Hospitals NHS Foundation Trust"
+      }
+    },
+    {
+      "id": "lind-121",
+      "question": "List the record IDs of female patients in Cramlington diagnosed with Asthma.",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "diag=Asthma",
+          "town=Cramlington",
+          "gender=Female"
+        ]
+      }
+    },
+    {
+      "id": "lind-122",
+      "question": "List the record IDs of female patients in Jarrow diagnosed with Heart failure.",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "diag=Heart failure",
+          "town=Jarrow",
+          "gender=Female"
+        ]
+      }
+    },
+    {
+      "id": "lind-123",
+      "question": "List the record IDs of patients whose recorded gender is 'Prefer not to say' in Ashington diagnosed with Kidney disease.",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "diag=Kidney disease",
+          "town=Ashington",
+          "gender=Prefer not to say"
+        ]
+      }
+    },
+    {
+      "id": "lind-124",
+      "question": "Which patients were seen under the specialty Urology with a diagnosis of Acute myocardial infarction?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "specialty=Urology",
+          "diag=Acute myocardial infarction"
+        ]
+      }
+    },
+    {
+      "id": "lind-125",
+      "question": "Which patients were seen under the specialty ENT with a diagnosis of Multiple sclerosis?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "specialty=ENT",
+          "diag=Multiple sclerosis"
+        ]
+      }
+    },
+    {
+      "id": "lind-126",
+      "question": "Which patients on Ward D2 have a diagnosis of End-stage renal disease?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "ward=Ward D2",
+          "diag=End-stage renal disease"
+        ]
+      }
+    },
+    {
+      "id": "lind-127",
+      "question": "Which patients on Ward A5 have a diagnosis of Bipolar affective disorder?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "ward=Ward A5",
+          "diag=Bipolar affective disorder"
+        ]
+      }
+    },
+    {
+      "id": "lind-128",
+      "question": "List the GHX procurement records where iGPR supplied South Tees Hospitals NHS Foundation Trust.",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "company=iGPR",
+          "trust=South Tees Hospitals NHS Foundation Trust"
+        ]
+      }
+    },
+    {
+      "id": "lind-129",
+      "question": "What is the GP surgery of the patient with NHS number 1872446700?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "nhs=1872446700 (not in corpus)"
+        ]
+      }
+    },
+    {
+      "id": "lind-130",
+      "question": "What is the value of contract CON-999999999?",
+      "gold_answer": "no matching records",
+      "category": "unanswerable",
+      "metadata": {
+        "verified_empty": [
+          "ref=CON-999999999 (not in corpus)"
+        ]
+      }
+    },
+    {
+      "id": "lind-131",
+      "question": "Does Idris Fraser (date of birth 1951-06-17) have any confirmed moderate allergies?",
+      "gold_answer": "false",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00001160"
+        ],
+        "confirmed_severities": []
+      }
+    },
+    {
+      "id": "lind-132",
+      "question": "Does Liu Walsh (date of birth 1932-09-21) have any confirmed severe allergies?",
+      "gold_answer": "false",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00019822"
+        ],
+        "confirmed_severities": [
+          "Mild",
+          "Moderate"
+        ]
+      }
+    },
+    {
+      "id": "lind-133",
+      "question": "Does Omar Stone (date of birth 1959-11-09) have any confirmed life-threatening allergies?",
+      "gold_answer": "true",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00007225"
+        ],
+        "confirmed_severities": [
+          "Life-threatening",
+          "Moderate"
+        ]
+      }
+    },
+    {
+      "id": "lind-134",
+      "question": "How many safety alert flags are recorded for the patient with NHS number 3347523091?",
+      "gold_answer": "0",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00018653"
+        ],
+        "alerts": []
+      }
+    },
+    {
+      "id": "lind-135",
+      "question": "How many safety alert flags are recorded for the patient with NHS number 3216687236?",
+      "gold_answer": "2",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00013405"
+        ],
+        "alerts": [
+          "Latex allergy",
+          "Pressure ulcer risk"
+        ]
+      }
+    },
+    {
+      "id": "lind-136",
+      "question": "Is Emily Fox (date of birth 1978-10-07) flagged with the alert 'Pressure ulcer risk'?",
+      "gold_answer": "false",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00012463"
+        ],
+        "alerts": [
+          "Pregnancy",
+          "C. diff history"
+        ]
+      }
+    },
+    {
+      "id": "lind-137",
+      "question": "Is Lucas Zhang (date of birth 1962-07-03) flagged with the alert 'Renal impairment — dose adjust'?",
+      "gold_answer": "true",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00012720"
+        ],
+        "alerts": [
+          "Renal impairment — dose adjust",
+          "MRSA carrier"
+        ]
+      }
+    },
+    {
+      "id": "lind-138",
+      "question": "How many of the recorded allergies for the patient with NHS number 6911272165 are confirmed?",
+      "gold_answer": "2",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00010566"
+        ],
+        "confirmed": 2,
+        "total_allergies": 3
+      }
+    },
+    {
+      "id": "lind-139",
+      "question": "How many of the recorded allergies for the patient with NHS number 7067434149 are confirmed?",
+      "gold_answer": "1",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00000738"
+        ],
+        "confirmed": 1,
+        "total_allergies": 2
+      }
+    },
+    {
+      "id": "lind-140",
+      "question": "Which allergen is recorded as life-threatening for Liam Spencer (date of birth 2006-09-30)?",
+      "gold_answer": "Codeine",
+      "category": "safety",
+      "metadata": {
+        "record_ids": [
+          "REC-00013903"
+        ]
+      }
+    }
+  ]
+}

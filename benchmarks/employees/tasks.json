@@ -1,0 +1,1006 @@
+{
+  "dataset": "employees",
+  "generated": "2026-09-14T05:02:19+00:00",
+  "source": "live API at http://127.0.0.1:8000 (pristine datacharmer/test_db v1.0.7)",
+  "answer_format": "numbers plain (no thousands separators, averages/percentages/ratios to 2 decimals); names 'First Last'; dates YYYY-MM-DD; booleans 'true'/'false'",
+  "categories": {
+    "lookup": "single-hop attribute of a named employee",
+    "multihop": "2-hop entity chains across employees/departments/managers",
+    "aggregate": "server-side computed statistics and filtered counts",
+    "temporal": "point-in-time queries over history tables",
+    "superlative": "server-side superlatives (top earners)",
+    "boundary": "strict-inequality and period-inclusive counting traps over populated boundaries — the naive inclusive or year-overflow filter provably differs",
+    "exclusion": "filtered count minus filtered count, incl. senior-title and decade complements",
+    "disambiguation": "attribute of the uniquely-qualified one among same-name employees (stated, entity-referenced, or double disambiguation)",
+    "comparison": "true/false comparison of two retrieved values (near-miss, strict-date boundaries)",
+    "arithmetic": "differences/percentages/ratios computed over retrievals",
+    "verification": "yes/no state claims over history and tenure (near-miss)",
+    "deep": "3+ tool-call chains (dept -> top earner/manager -> attribute)",
+    "rank": "n-th ranked positions, ranked exclusions, and top-n set logic",
+    "fanout": "argmax over a whole-collection artifact (group_by/headcount)",
+    "nested": "derived thresholds and dates chained into subsequent filters",
+    "history": "penultimate/record-indexed lookups and growth booleans",
+    "crosscompare": "near-miss comparisons between two computed populations"
+  },
+  "tasks": [
+    {
+      "id": "emp-001",
+      "question": "What is the current annual salary of Bezalel Simmel?",
+      "gold_answer": "72527",
+      "category": "lookup",
+      "metadata": {
+        "emp_no": 10002
+      }
+    },
+    {
+      "id": "emp-002",
+      "question": "What is the current job title of Parto Bamford?",
+      "gold_answer": "Senior Engineer",
+      "category": "lookup",
+      "metadata": {
+        "emp_no": 10003
+      }
+    },
+    {
+      "id": "emp-003",
+      "question": "In which department does Chirstian Koblick currently work? Give the department name.",
+      "gold_answer": "Production",
+      "category": "lookup",
+      "metadata": {
+        "emp_no": 10004
+      }
+    },
+    {
+      "id": "emp-004",
+      "question": "On what date was Kyoichi Maliniak hired? Answer in YYYY-MM-DD format.",
+      "gold_answer": "1989-09-12",
+      "category": "lookup",
+      "metadata": {
+        "emp_no": 10005
+      }
+    },
+    {
+      "id": "emp-005",
+      "question": "Who is the current manager of the department in which Bezalel Simmel works? Give the manager's full name.",
+      "gold_answer": "Hauke Zhang",
+      "category": "multihop",
+      "metadata": {
+        "dept_no": "d007",
+        "manager_emp_no": 111133
+      }
+    },
+    {
+      "id": "emp-006",
+      "question": "What is the current annual salary of the manager of the Development department?",
+      "gold_answer": "74510",
+      "category": "multihop",
+      "metadata": {
+        "manager_emp_no": 110567
+      }
+    },
+    {
+      "id": "emp-007",
+      "question": "Who is the top earner in the Finance department? Give the full name.",
+      "gold_answer": "Lunjin Swick",
+      "category": "multihop",
+      "metadata": {
+        "emp_no": 413137
+      }
+    },
+    {
+      "id": "emp-008",
+      "question": "How many Engineers currently work in the Development department?",
+      "gold_answer": "14040",
+      "category": "multihop",
+      "metadata": {
+        "dept_no": "d005"
+      }
+    },
+    {
+      "id": "emp-009",
+      "question": "What is the average current salary in the Development department?",
+      "gold_answer": "67657.92",
+      "category": "aggregate",
+      "metadata": {
+        "dept_no": "d005"
+      }
+    },
+    {
+      "id": "emp-010",
+      "question": "What is the maximum current salary in the Sales department?",
+      "gold_answer": "158220",
+      "category": "aggregate",
+      "metadata": {
+        "dept_no": "d007"
+      }
+    },
+    {
+      "id": "emp-011",
+      "question": "How many employees currently hold a salary record (are on the active payroll)?",
+      "gold_answer": "240124",
+      "category": "aggregate",
+      "metadata": {}
+    },
+    {
+      "id": "emp-012",
+      "question": "How many employees in the Sales department currently earn at least 150000?",
+      "gold_answer": "15",
+      "category": "aggregate",
+      "metadata": {
+        "dept_no": "d007"
+      }
+    },
+    {
+      "id": "emp-013",
+      "question": "What was the annual salary of Bezalel Simmel on 1997-08-03?",
+      "gold_answer": "65909",
+      "category": "temporal",
+      "metadata": {
+        "emp_no": 10002,
+        "at_date": "1997-08-03"
+      }
+    },
+    {
+      "id": "emp-014",
+      "question": "How many salary records has Bezalel Simmel had in total over their employment history?",
+      "gold_answer": "6",
+      "category": "temporal",
+      "metadata": {
+        "emp_no": 10002
+      }
+    },
+    {
+      "id": "emp-015",
+      "question": "What job title did Chirstian Koblick hold on 1995-12-01?",
+      "gold_answer": "Senior Engineer",
+      "category": "temporal",
+      "metadata": {
+        "emp_no": 10004,
+        "at_date": "1995-12-01"
+      }
+    },
+    {
+      "id": "emp-016",
+      "question": "In which department did Duangkaew Piveteau work on 2000-06-26? Give the department name.",
+      "gold_answer": "Quality Management",
+      "category": "temporal",
+      "metadata": {
+        "emp_no": 10010,
+        "at_date": "2000-06-26"
+      }
+    },
+    {
+      "id": "emp-017",
+      "question": "Who is the top earner in the entire company? Give the full name.",
+      "gold_answer": "Tokuyasu Pesch",
+      "category": "superlative",
+      "metadata": {
+        "emp_no": 43624
+      }
+    },
+    {
+      "id": "emp-018",
+      "question": "Who is the top earner in the Human Resources department? Give the full name.",
+      "gold_answer": "Yinlin Flowers",
+      "category": "superlative",
+      "metadata": {
+        "emp_no": 421835
+      }
+    },
+    {
+      "id": "emp-019",
+      "question": "How many employees company-wide were hired strictly before 1990-01-01?",
+      "gold_answer": "164797",
+      "category": "boundary",
+      "metadata": {
+        "hired_before": "1989-12-31"
+      }
+    },
+    {
+      "id": "emp-020",
+      "question": "How many employees in the Production department were hired strictly after 1996-01-01?",
+      "gold_answer": "3881",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d004",
+        "hired_after": "1996-01-02"
+      }
+    },
+    {
+      "id": "emp-021",
+      "question": "How many employees in the Sales department were hired strictly between 1990-01-01 and 1992-01-01 (both ends exclusive)?",
+      "gold_answer": "6076",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d007",
+        "hired_after": "1990-01-02",
+        "hired_before": "1991-12-31"
+      }
+    },
+    {
+      "id": "emp-022",
+      "question": "How many employees in the Finance department were hired strictly before 1992-06-15?",
+      "gold_answer": "9231",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d002",
+        "hired_before": "1992-06-14"
+      }
+    },
+    {
+      "id": "emp-023",
+      "question": "How many employees were hired during 1985 (inclusive: 1985-01-01 through 1985-12-31)?",
+      "gold_answer": "35316",
+      "category": "boundary",
+      "metadata": {
+        "hired_after": "1985-01-01",
+        "hired_before": "1985-12-31"
+      }
+    },
+    {
+      "id": "emp-024",
+      "question": "How many employees in the Marketing department were hired during the 1980s (inclusive: 1980-01-01 through 1989-12-31)?",
+      "gold_answer": "8102",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d001",
+        "hired_before": "1989-12-31"
+      }
+    },
+    {
+      "id": "emp-025",
+      "question": "How many employees in the Production department currently do NOT earn between 40000 and 50000 (inclusive)?",
+      "gold_answer": "48031",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d004",
+        "band": [
+          40000,
+          50000
+        ]
+      }
+    },
+    {
+      "id": "emp-026",
+      "question": "How many employees in the Development department currently do NOT earn between 60000 and 70000 (inclusive)?",
+      "gold_answer": "44798",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d005",
+        "band": [
+          60000,
+          70000
+        ]
+      }
+    },
+    {
+      "id": "emp-027",
+      "question": "How many employees in the Marketing department currently earn at least 80000 but strictly less than 100000?",
+      "gold_answer": "5110",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d001",
+        "min_salary": 80000,
+        "max_salary": 99999
+      }
+    },
+    {
+      "id": "emp-028",
+      "question": "How many employees in the Sales department currently earn more than 60000 but at most 80000?",
+      "gold_answer": "10103",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d007",
+        "min_salary": 60001,
+        "max_salary": 80000
+      }
+    },
+    {
+      "id": "emp-029",
+      "question": "How many employees in the Sales department currently earn strictly more than 120000?",
+      "gold_answer": "1589",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d007",
+        "min_salary": 120001
+      }
+    },
+    {
+      "id": "emp-030",
+      "question": "How many employees in the Production department currently earn strictly less than 60000?",
+      "gold_answer": "17109",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d004",
+        "max_salary": 59999
+      }
+    },
+    {
+      "id": "emp-031",
+      "question": "How many employees in the Development department currently earn strictly between 60000 and 80000 (both ends exclusive)?",
+      "gold_answer": "29751",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d005",
+        "min_salary": 60001,
+        "max_salary": 79999
+      }
+    },
+    {
+      "id": "emp-032",
+      "question": "How many employees in the Finance department currently earn strictly more than 100000?",
+      "gold_answer": "1421",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d002",
+        "min_salary": 100001
+      }
+    },
+    {
+      "id": "emp-033",
+      "question": "How many employees in the Sales department were NOT hired during 1990–1999 (1990-01-01 through 1999-12-31)?",
+      "gold_answer": "20678",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d007",
+        "decade": [
+          "1990-01-01",
+          "1999-12-31"
+        ]
+      }
+    },
+    {
+      "id": "emp-034",
+      "question": "How many employees in the Marketing department were NOT hired during 1985–1989 (1985-01-01 through 1989-12-31)?",
+      "gold_answer": "6740",
+      "category": "boundary",
+      "metadata": {
+        "dept_no": "d001",
+        "decade": [
+          "1985-01-01",
+          "1989-12-31"
+        ]
+      }
+    },
+    {
+      "id": "emp-035",
+      "question": "How many employees currently work in the Marketing department and do NOT hold the title Staff?",
+      "gold_answer": "11291",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d001",
+        "title": "Staff"
+      }
+    },
+    {
+      "id": "emp-036",
+      "question": "How many employees currently work in the Finance department and do NOT hold the title Staff?",
+      "gold_answer": "9546",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d002",
+        "title": "Staff"
+      }
+    },
+    {
+      "id": "emp-037",
+      "question": "How many employees currently work in the Human Resources department and do NOT hold the title Staff?",
+      "gold_answer": "9825",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d003",
+        "title": "Staff"
+      }
+    },
+    {
+      "id": "emp-038",
+      "question": "How many employees currently work in the Production department and do NOT hold the title Engineer?",
+      "gold_answer": "41223",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d004",
+        "title": "Engineer"
+      }
+    },
+    {
+      "id": "emp-039",
+      "question": "How many employees in the Sales department do NOT hold a senior title (Senior Engineer or Senior Staff)?",
+      "gold_answer": "8904",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d007",
+        "n_senior": 28797
+      }
+    },
+    {
+      "id": "emp-040",
+      "question": "How many employees in the Research department do NOT hold a senior title (Senior Engineer or Senior Staff)?",
+      "gold_answer": "4099",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d008",
+        "n_senior": 11342
+      }
+    },
+    {
+      "id": "emp-041",
+      "question": "How many employees in the Development department were NOT hired during the 1990s (1990-01-01 through 1999-12-31)?",
+      "gold_answer": "33725",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d005",
+        "decade": [
+          "1990-01-01",
+          "1999-12-31"
+        ]
+      }
+    },
+    {
+      "id": "emp-042",
+      "question": "How many employees in the Production department were NOT hired during the 1990s (1990-01-01 through 1999-12-31)?",
+      "gold_answer": "29274",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d004",
+        "decade": [
+          "1990-01-01",
+          "1999-12-31"
+        ]
+      }
+    },
+    {
+      "id": "emp-043",
+      "question": "How many employees with the title Engineer currently work outside the Marketing department?",
+      "gold_answer": "30983",
+      "category": "exclusion",
+      "metadata": {
+        "title": "Engineer",
+        "dept_no": "d001"
+      }
+    },
+    {
+      "id": "emp-044",
+      "question": "How many female employees in the Production department do NOT hold the title Engineer?",
+      "gold_answer": "16531",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d004",
+        "gender": "F",
+        "title": "Engineer"
+      }
+    },
+    {
+      "id": "emp-045",
+      "question": "How many employees in the Production department currently earn less than 60000 and do NOT hold the title Engineer?",
+      "gold_answer": "10187",
+      "category": "exclusion",
+      "metadata": {
+        "dept_no": "d004",
+        "title": "Engineer",
+        "max_salary": 59999
+      }
+    },
+    {
+      "id": "emp-046",
+      "question": "There are multiple employees named Bezalel Kavvadias. What is the current annual salary of the one who works in the Production department?",
+      "gold_answer": "64623",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 20152
+      }
+    },
+    {
+      "id": "emp-047",
+      "question": "There are multiple employees named Bezalel Kavvadias. What is the hire date of the one who works in the Research department? Answer in YYYY-MM-DD format.",
+      "gold_answer": "1989-01-28",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 208822
+      }
+    },
+    {
+      "id": "emp-048",
+      "question": "There are multiple employees named Bezalel Syrotiuk. What is the current job title of the one who works in the Development department?",
+      "gold_answer": "Technique Leader",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 59726
+      }
+    },
+    {
+      "id": "emp-049",
+      "question": "There are multiple employees named Bezalel Kavvadias. What is the current annual salary of the one who works in the same department as Parto Bamford?",
+      "gold_answer": "64623",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 20152,
+        "colleague": 10003
+      }
+    },
+    {
+      "id": "emp-050",
+      "question": "There are multiple employees named Bezalel Kavvadias. What is the current job title of the one who works in the same department as Tzvetan Zielinski?",
+      "gold_answer": "Senior Engineer",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 208822,
+        "colleague": 10007
+      }
+    },
+    {
+      "id": "emp-051",
+      "question": "There are multiple employees named Bezalel Syrotiuk. What is the current annual salary of the one who works in the same department as Anneke Preusig?",
+      "gold_answer": "102863",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 59726,
+        "colleague": 10006
+      }
+    },
+    {
+      "id": "emp-052",
+      "question": "There are multiple employees named Bezalel Deverell. What is the current job title of the one who works in the same department as the Bezalel Kavvadias who works in the Production department?",
+      "gold_answer": "Technique Leader",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 82616,
+        "anchor": 20152
+      }
+    },
+    {
+      "id": "emp-053",
+      "question": "There are multiple employees named Bezalel Deverell. What is the current job title of the one who works in the same department as the Bezalel Kavvadias who works in the Research department?",
+      "gold_answer": "Senior Staff",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 207756,
+        "anchor": 208822
+      }
+    },
+    {
+      "id": "emp-054",
+      "question": "There are multiple employees named Parto Encarnacion. What is the current job title of the one who works in the same department as the Bezalel Syrotiuk who works in the Development department?",
+      "gold_answer": "Senior Engineer",
+      "category": "disambiguation",
+      "metadata": {
+        "emp_no": 49847,
+        "anchor": 59726
+      }
+    },
+    {
+      "id": "emp-055",
+      "question": "Does Suzette Pettey currently earn at least 20% more than the average salary of their department? Answer true or false.",
+      "gold_answer": "true",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 10024,
+        "dept_no": "d004"
+      }
+    },
+    {
+      "id": "emp-056",
+      "question": "Does Weiyi Meriste currently earn at least 20% more than the average salary of their department? Answer true or false.",
+      "gold_answer": "false",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 10040,
+        "dept_no": "d008"
+      }
+    },
+    {
+      "id": "emp-057",
+      "question": "Does the current manager of the Marketing department currently earn more than the current manager of the Sales department? Answer true or false.",
+      "gold_answer": "true",
+      "category": "comparison",
+      "metadata": {
+        "mgr_hi": 110039,
+        "mgr_lo": 111133
+      }
+    },
+    {
+      "id": "emp-058",
+      "question": "Does the current manager of the Development department currently earn more than the current manager of the Finance department? Answer true or false.",
+      "gold_answer": "false",
+      "category": "comparison",
+      "metadata": {
+        "mgr_hi": 110114,
+        "mgr_lo": 110567
+      }
+    },
+    {
+      "id": "emp-059",
+      "question": "Was Bojan Montemayor hired strictly before 1990-01-01? Answer true or false.",
+      "gold_answer": "true",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 10023
+      }
+    },
+    {
+      "id": "emp-060",
+      "question": "Was Brendon Bernini hired strictly before 1990-01-01? Answer true or false.",
+      "gold_answer": "false",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 10056
+      }
+    },
+    {
+      "id": "emp-061",
+      "question": "Is Sumant Kakkar currently among the 10 highest earners of the Marketing department? Answer true or false.",
+      "gold_answer": "true",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 403062,
+        "dept_no": "d001"
+      }
+    },
+    {
+      "id": "emp-062",
+      "question": "Is Berni Genin currently among the 10 highest earners of the Development department? Answer true or false.",
+      "gold_answer": "false",
+      "category": "comparison",
+      "metadata": {
+        "emp_no": 10014,
+        "dept_no": "d005"
+      }
+    },
+    {
+      "id": "emp-063",
+      "question": "How many dollars more does Kazuhito Cappelletti currently earn per year than Berni Genin?",
+      "gold_answer": "17337",
+      "category": "arithmetic",
+      "metadata": {
+        "emp_hi": 10016,
+        "emp_lo": 10014
+      }
+    },
+    {
+      "id": "emp-064",
+      "question": "By what percentage does Zvonko Nyanchama's current salary exceed the average salary of their department? Give the percentage rounded to 2 decimals (e.g. 12.34).",
+      "gold_answer": "19.45",
+      "category": "arithmetic",
+      "metadata": {
+        "emp_no": 10047,
+        "dept_no": "d004"
+      }
+    },
+    {
+      "id": "emp-065",
+      "question": "How many times more employees currently work in the Development department than in the Finance department? Give the ratio rounded to 2 decimals.",
+      "gold_answer": "4.94",
+      "category": "arithmetic",
+      "metadata": {
+        "dept_hi": "d005",
+        "dept_lo": "d002"
+      }
+    },
+    {
+      "id": "emp-066",
+      "question": "How many dollars more does Chirstian Koblick earn now than on 1986-12-01?",
+      "gold_answer": "34003",
+      "category": "arithmetic",
+      "metadata": {
+        "emp_no": 10004
+      }
+    },
+    {
+      "id": "emp-067",
+      "question": "What percentage of the Sales department's employees currently earn strictly less than 100000? Give the percentage rounded to 2 decimals (e.g. 12.34).",
+      "gold_answer": "73.31",
+      "category": "arithmetic",
+      "metadata": {
+        "dept_no": "d007"
+      }
+    },
+    {
+      "id": "emp-068",
+      "question": "What percentage of the Production department's employees currently earn strictly less than 60000? Give the percentage rounded to 2 decimals (e.g. 12.34).",
+      "gold_answer": "32.10",
+      "category": "arithmetic",
+      "metadata": {
+        "dept_no": "d004"
+      }
+    },
+    {
+      "id": "emp-069",
+      "question": "Did Chirstian Koblick hold the title Engineer on 1986-12-01? Answer true or false.",
+      "gold_answer": "true",
+      "category": "verification",
+      "metadata": {
+        "emp_no": 10004,
+        "at_date": "1986-12-01"
+      }
+    },
+    {
+      "id": "emp-070",
+      "question": "Did Chirstian Koblick hold the title Senior Engineer on 1986-12-01? Answer true or false.",
+      "gold_answer": "false",
+      "category": "verification",
+      "metadata": {
+        "emp_no": 10004,
+        "at_date": "1986-12-01"
+      }
+    },
+    {
+      "id": "emp-071",
+      "question": "Has the current manager of the Marketing department been managing it since before 1995-01-01? Answer true or false.",
+      "gold_answer": "true",
+      "category": "verification",
+      "metadata": {
+        "manager_emp_no": 110039
+      }
+    },
+    {
+      "id": "emp-072",
+      "question": "Has the current manager of the Production department been managing it since before 1995-01-01? Answer true or false.",
+      "gold_answer": "false",
+      "category": "verification",
+      "metadata": {
+        "manager_emp_no": 110420
+      }
+    },
+    {
+      "id": "emp-073",
+      "question": "Did Kazuhide Peha join the company before the current manager of their department did? Answer true or false.",
+      "gold_answer": "true",
+      "category": "verification",
+      "metadata": {
+        "emp_no": 10018,
+        "manager_emp_no": 110420
+      }
+    },
+    {
+      "id": "emp-074",
+      "question": "Did Berni Genin join the company before the current manager of their department did? Answer true or false.",
+      "gold_answer": "false",
+      "category": "verification",
+      "metadata": {
+        "emp_no": 10014,
+        "manager_emp_no": 110567
+      }
+    },
+    {
+      "id": "emp-075",
+      "question": "Did Duangkaew Piveteau work in the Production department on 1996-11-24? Answer true or false.",
+      "gold_answer": "true",
+      "category": "verification",
+      "metadata": {
+        "emp_no": 10010,
+        "at_date": "1996-11-24"
+      }
+    },
+    {
+      "id": "emp-076",
+      "question": "What is the current annual salary of the top earner in the department where Divier Reistad works?",
+      "gold_answer": "144434",
+      "category": "deep",
+      "metadata": {
+        "emp_no": 10027,
+        "dept_no": "d005",
+        "top_emp_no": 13386
+      }
+    },
+    {
+      "id": "emp-077",
+      "question": "Who was the manager of the department where Elvis Demeyer worked on 1998-06-01? Give the manager's full name.",
+      "gold_answer": "Oscar Ghazalie",
+      "category": "deep",
+      "metadata": {
+        "emp_no": 10030,
+        "at_date": "1998-06-01",
+        "manager_emp_no": 110420
+      }
+    },
+    {
+      "id": "emp-078",
+      "question": "How many employees currently share the last name of the top earner in the Finance department?",
+      "gold_answer": "204",
+      "category": "deep",
+      "metadata": {
+        "top_emp_no": 413137
+      }
+    },
+    {
+      "id": "emp-079",
+      "question": "Is the current manager of the Sales department its own top earner? Answer true or false.",
+      "gold_answer": "false",
+      "category": "deep",
+      "metadata": {
+        "manager_emp_no": 111133,
+        "top_emp_no": 43624
+      }
+    },
+    {
+      "id": "emp-080",
+      "question": "Is the current manager of the Customer Service department among that department's 10 highest earners? Answer true or false.",
+      "gold_answer": "false",
+      "category": "deep",
+      "metadata": {
+        "manager_emp_no": 111939
+      }
+    },
+    {
+      "id": "emp-081",
+      "question": "What is the current annual salary of the manager of the department where the second-highest earner of the Finance department works?",
+      "gold_answer": "83457",
+      "category": "deep",
+      "metadata": {
+        "top2_emp_no": 237069,
+        "dept_no": "d002",
+        "manager_emp_no": 110114
+      }
+    },
+    {
+      "id": "emp-082",
+      "question": "Who is the second-highest earner in the Finance department? Give the full name.",
+      "gold_answer": "Uta Lowrie",
+      "category": "rank",
+      "metadata": {
+        "emp_no": 237069
+      }
+    },
+    {
+      "id": "emp-083",
+      "question": "What is the current annual salary of the third-highest earner in the Sales department?",
+      "gold_answer": "155709",
+      "category": "rank",
+      "metadata": {
+        "emp_no": 47978
+      }
+    },
+    {
+      "id": "emp-084",
+      "question": "What is the current annual salary of the fifth-highest earner in the Development department?",
+      "gold_answer": "133712",
+      "category": "rank",
+      "metadata": {
+        "emp_no": 209076
+      }
+    },
+    {
+      "id": "emp-085",
+      "question": "How many of the 5 highest earners in the Production department do NOT hold a senior title (Senior Engineer or Senior Staff)?",
+      "gold_answer": "1",
+      "category": "rank",
+      "metadata": {
+        "dept_no": "d004",
+        "n_senior": 4
+      }
+    },
+    {
+      "id": "emp-086",
+      "question": "How many of the 5 highest earners in the Development department do NOT hold a senior title (Senior Engineer or Senior Staff)?",
+      "gold_answer": "1",
+      "category": "rank",
+      "metadata": {
+        "dept_no": "d005",
+        "n_senior": 4
+      }
+    },
+    {
+      "id": "emp-087",
+      "question": "How many of the 10 highest earners in the Development department hold one of the titles Senior Engineer, Senior Staff, or Technique Leader?",
+      "gold_answer": "9",
+      "category": "rank",
+      "metadata": {
+        "dept_no": "d005",
+        "n_three": 9
+      }
+    },
+    {
+      "id": "emp-088",
+      "question": "Which department has the highest average current salary? Give the department name.",
+      "gold_answer": "Sales",
+      "category": "fanout",
+      "metadata": {
+        "dept_no": "d007"
+      }
+    },
+    {
+      "id": "emp-089",
+      "question": "Which department has the second-highest average current salary? Give the department name.",
+      "gold_answer": "Marketing",
+      "category": "fanout",
+      "metadata": {
+        "dept_no": "d001"
+      }
+    },
+    {
+      "id": "emp-090",
+      "question": "Which department currently has the fewest employees? Give the department name.",
+      "gold_answer": "Finance",
+      "category": "fanout",
+      "metadata": {
+        "dept_no": "d002"
+      }
+    },
+    {
+      "id": "emp-091",
+      "question": "How many employees in the Sales department currently earn at least as much as the current manager of the Development department?",
+      "gold_answer": "29524",
+      "category": "nested",
+      "metadata": {
+        "min_salary": 74510,
+        "dept_no": "d007"
+      }
+    },
+    {
+      "id": "emp-092",
+      "question": "How many employees in the Marketing department currently earn strictly less than the Marketing department's own top earner?",
+      "gold_answer": "14841",
+      "category": "nested",
+      "metadata": {
+        "dept_no": "d001",
+        "max_salary": 145127
+      }
+    },
+    {
+      "id": "emp-093",
+      "question": "What was the annual salary of the current manager of the Human Resources department on the date the current manager of the Finance department started managing the Finance department?",
+      "gold_answer": "49541",
+      "category": "nested",
+      "metadata": {
+        "manager_emp_no": 110228,
+        "at_date": "1989-12-17"
+      }
+    },
+    {
+      "id": "emp-094",
+      "question": "In which department did Kazuhide Peha work on the date the current manager of the Finance department started managing it? Give the department name.",
+      "gold_answer": "Development",
+      "category": "nested",
+      "metadata": {
+        "emp_no": 10018,
+        "at_date": "1989-12-17"
+      }
+    },
+    {
+      "id": "emp-095",
+      "question": "What was the annual salary of Chirstian Koblick immediately before their most recent salary change?",
+      "gold_answer": "70698",
+      "category": "history",
+      "metadata": {
+        "emp_no": 10004
+      }
+    },
+    {
+      "id": "emp-096",
+      "question": "What job title did Tzvetan Zielinski hold immediately before their current one?",
+      "gold_answer": "Staff",
+      "category": "history",
+      "metadata": {
+        "emp_no": 10007
+      }
+    },
+    {
+      "id": "emp-097",
+      "question": "Did Lillian Haddadi's most recent salary change increase their salary by more than 5%? Answer true or false.",
+      "gold_answer": "true",
+      "category": "history",
+      "metadata": {
+        "emp_no": 10019
+      }
+    },
+    {
+      "id": "emp-098",
+      "question": "Is the average current salary of employees with the title Engineer in the Production department higher than that of employees with the title Engineer in the Development department? Answer true or false.",
+      "gold_answer": "true",
+      "category": "crosscompare",
+      "metadata": {
+        "dept_hi": "d004",
+        "dept_lo": "d005"
+      }
+    },
+    {
+      "id": "emp-099",
+      "question": "Is the average current salary of employees with the title Staff in the Human Resources department higher than that of employees with the title Engineer in the Development department? Answer true or false.",
+      "gold_answer": "false",
+      "category": "crosscompare",
+      "metadata": {
+        "dept_hi": "d005",
+        "dept_lo": "d003"
+      }
+    }
+  ]
+}

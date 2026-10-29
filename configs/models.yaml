@@ -1,0 +1,157 @@
+# Model configurations — direct provider calls via litellm prefixes.
+#
+# No proxy mode. Each key is a CLI --model choice in runner.py.
+# The ``model`` field is the full litellm model name including provider
+# prefix (e.g., ``groq/...``, ``nvidia_nim/...``, ``zai/...``). litellm
+# resolves the provider endpoint automatically from this prefix.
+#
+# ``api_key_env`` points to the provider-specific API key env var.
+# ``api_base`` overrides the provider's default endpoint if needed.
+
+
+# Z.AI (Zhipu) GLM via the GLM Coding Plan subscription.
+# Uses a different endpoint than litellm's zai/ default.
+# IMPORTANT: z.ai rejects temperature=0.0 ("range is (0,1)").
+glm-4.5-flash:
+  model: zai/glm-4.5-flash
+  api_key_env: ZAI_API_KEY
+  api_base: https://api.z.ai/api/paas/v4
+  temperature: 0.1
+  max_completion_tokens: 1024
+  num_retries: 3
+  timeout: 90
+
+glm-4.5-air:
+  model: zai/glm-4.5-air
+  api_key_env: ZAI_API_KEY
+  api_base: https://api.z.ai/api/coding/paas/v4
+  temperature: 0.1
+  max_completion_tokens: 1024
+  num_retries: 3
+  timeout: 90
+
+glm-5.3-flash:
+  model: zai/glm-5.3-flash
+  api_key_env: ZAI_API_KEY
+  api_base: https://api.z.ai/api/coding/paas/v4
+  temperature: 0.1
+  max_completion_tokens: 8192
+  num_retries: 10
+  timeout: 300
+
+# Azure AI Foundry — shared project (eag-experiments), API-key auth (cross-tenant).
+# Endpoint comes from AZURE_AI_API_BASE in .env via api_base_env (project URL kept out of git).
+# Uses the project's OpenAI-compatible surface: {AZURE_AI_API_BASE}/openai/v1.
+# NOTE: /models catalog listing 403s under key auth (needs Entra RBAC) — inference is unaffected.
+# gpt-5.6-sol is a GPT-5-style reasoning model: only temperature=1 and it rejects `max_tokens`
+# (litellm translates max_completion_tokens per model family; verified in smoke test).
+azure-deepseek-v4-flash:
+  model: openai/DeepSeek-V4-Flash
+  api_key_env: AZURE_AI_API_KEY
+  api_base_env: AZURE_AI_API_BASE
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 16384
+  num_retries: 6
+  timeout: 300
+
+azure-gpt-5.6-sol:
+  model: openai/gpt-5.6-sol
+  api_key_env: AZURE_AI_API_KEY
+  api_base_env: AZURE_AI_API_BASE
+  temperature: 1
+  max_completion_tokens: 16384
+  num_retries: 6
+  timeout: 300
+
+nvidia-gpt-oss-20b:
+  model: nvidia_nim/openai/gpt-oss-20b
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 0.0
+  max_completion_tokens: 8192
+  num_retries: 6
+  timeout: 180
+
+nvidia-nemotron-ultra:
+  model: nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 16384
+  timeout: 300
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: true
+
+nvidia-nemotron-super:
+  model: nvidia_nim/nvidia/nemotron-3-super-120b-a12b
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 16384
+  timeout: 300
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: true
+
+deepseek-v4-flash:
+  model: nvidia_nim/deepseek-ai/deepseek-v4-flash-0731
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 16384
+  timeout: 300
+  extra_body:
+    chat_template_kwargs:
+      thinking: true
+      reasoning_effort: high
+
+# gemma-4-31b:
+#   model: nvidia_nim/google/gemma-4-31b-it
+#   api_key_env: NVIDIA_API_KEY
+#   api_base: https://integrate.api.nvidia.com/v1
+#   temperature: 1
+#   top_p: 0.95
+#   max_completion_tokens: 16384
+#   timeout: 300
+#   extra_body:
+#     chat_template_kwargs:
+#       enable_thinking: true
+
+gemma-4-31b-qat-w4a16:
+  model: openai/gemma-4-31b-it-qat-w4a16
+  api_key_env: AI_MACHINE_API_KEY
+  api_base_env: AI_MACHINE_API_BASE
+  temperature: 0.0
+  max_completion_tokens: 8192
+  num_retries: 6
+  timeout: 300
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: true
+
+muse-glimmer-30b:
+  model: nvidia_nim/meta/muse-glimmer-30b
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 8192
+  num_retries: 6
+  timeout: 300
+
+nvidia-nemotron-lightning:
+  model: nvidia_nim/nvidia/nemotron-3.5-lightning-30b-a3b
+  api_key_env: NVIDIA_API_KEY
+  api_base: https://integrate.api.nvidia.com/v1
+  temperature: 1
+  top_p: 0.95
+  max_completion_tokens: 16384
+  timeout: 300
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: true
