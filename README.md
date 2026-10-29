@@ -44,7 +44,7 @@ differs.
 | Local artifact store (`ToolResult.data`) | rides on `ToolMessage.artifact`, stripped before serialization (`agent.py`) |
 | Post-run answer splicing + `<unavailable: ...>` sentinels | `agent.py` |
 | Exposure accounting (metadata / data / evaluation tokens per step) | `agent.py` (`tool_type`, `observation_tokens`), summary rollups in each results file |
-| Verified disclosure (value inventories, per-observation matching) | `scripts/disclosure_metrics/`, `scripts/derive_disclosure_metrics.py` |
+| Verified disclosure (value inventories, per-observation matching) | analysis layer of the research artifacts; per-run JSONs carry the per-step `tool_type` / `observation_tokens` fields it consumes |
 | ReAct loop | `agent.py` over `langchain.agents.create_agent` (langgraph) |
 
 ## Installation
@@ -135,19 +135,18 @@ EM/F1 for the QA datasets.
 
 ### Analysis pipeline
 
-After the runs complete, `results/` holds one JSON per run (written
-atomically per item, so interrupted runs are always resumable):
+Each run writes one JSON per run into `results/` (git-ignored; written
+atomically per item, so interrupted runs are always resumable). Every results
+file already carries the full exposure accounting the paper's analysis
+consumes: per-step `tool_type` (`metadata` / `data` / `data_redacted` /
+`evaluation`), `observation_tokens`, and the `exposure_by_tool` /
+`total_data_tokens` / `total_metadata_tokens` /
+`total_unresolved_placeholders` rollups.
 
-```bash
-# freeze 5+5 runs per cell into results/paper-experiments/ (dry-run by default)
-uv run python scripts/freeze_results.py --dataset <ds> --model <model> --apply
-
-# verified-disclosure metrics (dr / vvf / maxleak / records per cell)
-uv run python scripts/derive_disclosure_metrics.py
-
-# item-level exact McNemar tests over frozen baseline<->zerosight pairs
-uv run python scripts/mcnemar_tables.py
-```
+The post-processing layer used for the paper (run freezing per cell, verified
+disclosure measurement against per-dataset value inventories, and exact
+McNemar significance tests) operates on those results files and is kept with
+the research artifacts; it is not part of this release.
 
 ## Metrics
 
@@ -172,8 +171,8 @@ benchmarks/            dataset adapters (load / make_tools / system_prompt / sco
 metrics/               em_f1, execution accuracy, table QA scoring
 configs/models.yaml    flat model configs
 api/                   FastAPI REST layer over the employees MySQL DB
-scripts/               dataset download, subset construction, freeze /
-                       derive-disclosure / McNemar analysis
+scripts/               dataset download, subset construction, question
+                       generation (deterministic, --check auditable)
 tests/                 metric unit tests
 ```
 
